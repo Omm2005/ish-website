@@ -22,7 +22,10 @@ function makeStickers(count: number) {
     id: `sticker-${index}`,
     variant: variants[index % variants.length],
     top: 8 + Math.random() * 84,
-    left: 6 + Math.random() * 88,
+    left:
+      index % 2 === 0
+        ? 3 + Math.random() * 14
+        : 83 + Math.random() * 14,
     size: 72 + Math.round(Math.random() * 58),
     rotate: -16 + Math.random() * 32,
     duration: 4.8 + Math.random() * 3.4,
