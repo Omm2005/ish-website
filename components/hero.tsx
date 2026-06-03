@@ -1,5 +1,8 @@
+"use client"
+
 import Image from "next/image"
 import { Sparkles } from "lucide-react"
+import { triggerSparkles } from "@/components/sparkle-controller"
 
 const stats = [
   { value: "2.9", label: "years exploring" },
@@ -20,8 +23,15 @@ export function Hero() {
           </span>
 
           <h1 className="mt-6 text-balance font-serif text-5xl leading-[1.05] text-foreground md:text-7xl">
-            Hi, I&apos;m <span className="text-script font-normal text-rose">Ishita</span> and I
-            build soft, story-driven digital things.
+            Hi, I&apos;m{" "}
+            <button
+              type="button"
+              onClick={triggerSparkles}
+              className="text-script font-normal text-rose transition-transform hover:scale-105"
+            >
+              Ishita
+            </button>{" "}
+            and I build soft, story-driven digital things.
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">

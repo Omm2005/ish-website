@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { Menu, X } from "lucide-react"
 
 const links = [
@@ -17,9 +18,9 @@ export function SiteNav() {
   return (
     <header className="sticky top-0 z-50 px-4 pt-4">
       <nav className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/70 bg-background/85 px-6 py-4 shadow-[0_18px_35px_-28px_oklch(0.35_0.03_20_/_0.5)] backdrop-blur-md">
-        <a href="#top" className="text-script text-3xl leading-none text-foreground">
+        <Link href="/" className="text-script text-3xl leading-none text-foreground">
           Ishita
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
@@ -34,12 +35,12 @@ export function SiteNav() {
           ))}
         </ul>
 
-        <a
-          href="#contact"
+        <Link
+          href="/#contact"
           className="hidden rounded-full border border-rose/60 bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 md:inline-block"
         >
           Get in touch
-        </a>
+        </Link>
 
         <button
           type="button"
