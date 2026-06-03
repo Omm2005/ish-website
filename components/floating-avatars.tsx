@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 type StickerVariant = "sun" | "bow" | "star" | "cat" | "flower-girl" | "strawberry"
 
@@ -9,24 +9,44 @@ type FloatingSticker = {
   variant: StickerVariant
   top: number
   left: number
+  side: "left" | "right"
   size: number
   rotate: number
   duration: number
   delay: number
 }
 
+type StickerLine = {
+  label: string
+  bubble: string
+}
+
 const variants: StickerVariant[] = ["sun", "bow", "star", "cat", "flower-girl", "strawberry"]
 
-function makeStickers(count: number) {
+const stickerLines: Record<StickerVariant, StickerLine> = {
+  sun: { label: "sun", bubble: "hi hi, i am here." },
+  bow: { label: "bow", bubble: "a tiny knot, a tiny sparkle." },
+  star: { label: "star", bubble: "make a wish, then keep going." },
+  cat: { label: "cat", bubble: "i am guarding the side margins." },
+  "flower-girl": { label: "flower girl", bubble: "pretty things belong everywhere." },
+  strawberry: { label: "strawberry", bubble: "sweet little thoughts only." },
+}
+
+function makeStickers(count: number, width: number) {
+  const edgeMargin = width < 640 ? 10 : width < 1024 ? 16 : 24
+  const stickerSize = width < 640 ? [64, 96] : width < 1024 ? [82, 124] : [104, 164]
+  const gutterWidth = width < 640 ? Math.round(width * 0.24) : width < 1024 ? Math.round(width * 0.2) : Math.round(width * 0.16)
+
   return Array.from({ length: count }, (_, index) => ({
     id: `sticker-${index}`,
     variant: variants[index % variants.length],
     top: 8 + Math.random() * 84,
+    side: index % 2 === 0 ? "left" : "right",
     left:
       index % 2 === 0
-        ? 3 + Math.random() * 14
-        : 83 + Math.random() * 14,
-    size: 72 + Math.round(Math.random() * 58),
+        ? edgeMargin + Math.random() * gutterWidth
+        : width - edgeMargin - (stickerSize[1] + Math.random() * gutterWidth),
+    size: stickerSize[0] + Math.round(Math.random() * (stickerSize[1] - stickerSize[0])),
     rotate: -16 + Math.random() * 32,
     duration: 4.8 + Math.random() * 3.4,
     delay: Math.random() * 2.4,
@@ -120,21 +140,64 @@ function StickerSvg({ variant }: { variant: StickerVariant }) {
 
 export function FloatingAvatars() {
   const [stickers, setStickers] = useState<FloatingSticker[]>([])
+  const [activeId, setActiveId] = useState<string | null>(null)
+  const clearTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const activeSticker = useMemo(
+    () => stickers.find((sticker) => sticker.id === activeId) ?? null,
+    [activeId, stickers],
+  )
 
   useEffect(() => {
-    const count = window.innerWidth < 768 ? 8 : 14
-    setStickers(makeStickers(count))
+    const updateStickers = () => {
+      const width = window.innerWidth
+      const count = width < 640 ? 6 : width < 1024 ? 10 : 14
+      setStickers(makeStickers(count, width))
+    }
+
+    updateStickers()
+    window.addEventListener("resize", updateStickers)
+
+    return () => {
+      window.removeEventListener("resize", updateStickers)
+      if (clearTimer.current) {
+        clearTimeout(clearTimer.current)
+      }
+    }
   }, [])
 
+  useEffect(() => {
+    if (!activeId) {
+      return
+    }
+
+    if (clearTimer.current) {
+      clearTimeout(clearTimer.current)
+    }
+
+    clearTimer.current = setTimeout(() => {
+      setActiveId(null)
+    }, 3500)
+
+    return () => {
+      if (clearTimer.current) {
+        clearTimeout(clearTimer.current)
+      }
+    }
+  }, [activeId])
+
   return (
-    <div className="pointer-events-none absolute inset-0 z-30 h-full overflow-hidden" aria-hidden="true">
+    <div className="pointer-events-none absolute inset-0 z-30 h-full overflow-hidden select-none" aria-hidden="true">
       {stickers.map((sticker, index) => (
-        <div
+        <button
           key={sticker.id}
-          className={`floating-sticker ${index % 3 === 0 ? "drift-a" : index % 3 === 1 ? "drift-b" : "drift-c"}`}
+          type="button"
+          aria-label={`Open dialog from ${sticker.variant}`}
+          className={`floating-sticker pointer-events-auto ${index % 3 === 0 ? "drift-a" : index % 3 === 1 ? "drift-b" : "drift-c"}`}
+          onClick={() => setActiveId(sticker.id)}
           style={{
             top: `${sticker.top}%`,
-            left: `${sticker.left}%`,
+            left: `${sticker.left}px`,
             width: `${sticker.size}px`,
             height: `${sticker.size}px`,
             ["--base-rotate" as string]: `${sticker.rotate}deg`,
@@ -143,7 +206,19 @@ export function FloatingAvatars() {
           }}
         >
           <StickerSvg variant={sticker.variant} />
-        </div>
+          {activeSticker?.id === sticker.id && (
+            <span
+              className={`absolute ${
+                sticker.side === "right" ? "right-full mr-3" : "left-full ml-3"
+              } top-1/2 max-w-[9rem] -translate-y-1/2 rounded-[1.5rem] border border-border/50 bg-card px-3 py-2 text-left text-sm font-medium text-foreground shadow-[0_14px_30px_-18px_rgba(0,0,0,0.35)]`}
+            >
+              <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-rose">
+                {stickerLines[sticker.variant].label}
+              </span>
+              <span className="mt-1 block leading-snug">{stickerLines[sticker.variant].bubble}</span>
+            </span>
+          )}
+        </button>
       ))}
 
       <style jsx>{`
@@ -152,6 +227,11 @@ export function FloatingAvatars() {
           opacity: 0.92;
           filter: drop-shadow(0 12px 22px rgba(201, 120, 139, 0.24));
           will-change: transform;
+          border: 0;
+          background: transparent;
+          padding: 0;
+          cursor: pointer;
+          touch-action: manipulation;
         }
 
         .drift-a {
