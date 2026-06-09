@@ -8,12 +8,14 @@ import { Contact } from "@/components/contact"
 import { BeadDivider } from "@/components/coquette-graphics"
 import { FloatingAvatars } from "@/components/floating-avatars"
 import { SparkleController } from "@/components/sparkle-controller"
+import { MusicWidget } from "@/components/music-widget"
 
 export default function Page() {
   return (
     <main className="relative min-h-screen">
       <FloatingAvatars />
       <SparkleController />
+      <MusicWidget />
       <SiteNav />
       <Hero />
       <BeadDivider />
