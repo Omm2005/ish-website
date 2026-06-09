@@ -130,16 +130,22 @@
   }
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   body {
     @apply bg-background text-foreground;
     background-image:
-      linear-gradient(180deg, oklch(0.99 0.015 350), oklch(0.975 0.02 25)),
-      radial-gradient(oklch(0.82 0.085 355 / 0.08) 1px, transparent 1px),
-      radial-gradient(oklch(0.93 0.075 95 / 0.08) 1px, transparent 1px);
-    background-size: auto, 26px 26px, 26px 26px;
-    background-position: 0 0, 0 0, 13px 13px;
+      linear-gradient(180deg, oklch(0.99 0.015 350), oklch(0.97 0.018 80)),
+      radial-gradient(oklch(0.82 0.085 355 / 0.1) 1px, transparent 1px),
+      repeating-linear-gradient(90deg, oklch(0.96 0.035 350 / 0.2) 0 16px, transparent 16px 32px);
+    background-size: auto, 26px 26px, auto;
+    background-position: 0 0, 0 0, 0 0;
     font-weight: 400;
+    overflow-x: hidden;
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M14 2l3.1 8 8.5.5-6.6 5.4 2.1 8.3L14 19.6 6.9 24.2 9 15.9 2.4 10.5l8.5-.5z' fill='%23f2b1cc' stroke='%237a4d5a' stroke-width='1.4'/%3E%3C/svg%3E")
+        14 14,
+      auto;
   }
   ::selection {
     background: oklch(0.82 0.085 355 / 0.35);
@@ -157,6 +163,25 @@
     box-shadow:
       0 18px 40px -24px oklch(0.35 0.03 20 / 0.42),
       10px 10px 0 oklch(0.68 0.04 40 / 0.12);
+  }
+  .paper-wobble {
+    transform: rotate(var(--tilt, 0deg));
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease;
+  }
+  .paper-wobble:hover {
+    transform: translateY(-4px) rotate(calc(var(--tilt, 0deg) * -0.4));
+  }
+  .sticker-peel {
+    transition:
+      transform 220ms ease,
+      filter 220ms ease;
+    transform-origin: 18% 12%;
+  }
+  .sticker-peel:hover {
+    transform: translateY(-3px) rotate(-2deg);
+    filter: drop-shadow(0 12px 14px oklch(0.48 0.08 350 / 0.18));
   }
   .paper-card {
     border: 1px solid oklch(0.89 0.03 25);
@@ -200,5 +225,22 @@
       oklch(0.78 0.03 15 / 0.45) 19px
     );
     background-size: 100% 28px;
+  }
+  .postcard-lace {
+    position: relative;
+    border: 2px solid oklch(1 0 0 / 0.64);
+    border-radius: 1rem;
+    box-shadow: inset 0 0 0 1px oklch(0.96 0.025 340 / 0.7);
+  }
+  .pegboard {
+    background-color: oklch(0.975 0.015 40);
+    background-image:
+      radial-gradient(circle at center, oklch(0.9 0.02 30 / 0.7) 0 1.5px, transparent 1.6px),
+      linear-gradient(180deg, oklch(1 0 0 / 0.78), oklch(0.97 0.01 50 / 0.9));
+    background-size: 18px 18px, auto;
+    background-position: 9px 9px, 0 0;
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.75),
+      0 24px 45px -30px oklch(0.38 0.04 25 / 0.42);
   }
 }

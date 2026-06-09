@@ -17,17 +17,19 @@ export function SiteNav() {
 
   return (
     <header className="sticky top-0 z-50 px-4 pt-4">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/70 bg-background/85 px-6 py-4 shadow-[0_18px_35px_-28px_oklch(0.35_0.03_20_/_0.5)] backdrop-blur-md">
-        <Link href="/" className="text-script text-3xl leading-none text-foreground">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/70 bg-card/80 px-5 py-4 shadow-[0_18px_35px_-28px_oklch(0.35_0.03_20_/_0.5)] backdrop-blur-md sm:px-6">
+        <Link href="/" className="text-script text-[2.35rem] leading-[1.15] text-foreground sm:text-3xl">
           Ishita
         </Link>
 
-        <ul className="hidden items-center gap-8 md:flex">
-          {links.map((link) => (
+        <ul className="hidden items-center gap-3 md:flex">
+          {links.map((link, index) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-sm font-semibold tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-foreground"
+                className={`paper-wobble sticker-peel inline-flex rounded-full border border-border/60 bg-[#fffaf4] px-4 py-2 text-xs font-semibold uppercase leading-none tracking-[0.14em] text-muted-foreground shadow-[6px_7px_0_oklch(0.88_0.03_30_/_0.72)] transition-colors hover:text-foreground ${
+                  index % 2 === 0 ? "[--tilt:-2deg]" : "[--tilt:2deg]"
+                }`}
               >
                 {link.label}
               </a>
@@ -45,7 +47,7 @@ export function SiteNav() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="rounded-full border border-border bg-card p-2 text-foreground md:hidden"
+          className="rounded-full border border-border bg-card p-2.5 text-foreground md:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
         >
@@ -55,7 +57,7 @@ export function SiteNav() {
 
       {open && (
         <div className="mx-auto mt-2 max-w-6xl rounded-[2rem] border border-border/60 bg-background/95 shadow-lg md:hidden">
-          <ul className="mx-auto flex max-w-6xl flex-col px-6 py-4">
+          <ul className="mx-auto flex max-w-6xl flex-col px-5 py-4">
             {links.map((link) => (
               <li key={link.href}>
                 <a

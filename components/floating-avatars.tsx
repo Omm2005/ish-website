@@ -1,15 +1,14 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
-
-type StickerVariant = "sun" | "bow" | "star" | "cat" | "flower-girl" | "strawberry"
+import { StickerSvg, type StickerVariant } from "@/components/sticker-svg"
 
 type FloatingSticker = {
   id: string
   variant: StickerVariant
-  top: number
-  left: number
   side: "left" | "right"
+  topPercent: number
+  leftPercent: number
   size: number
   rotate: number
   duration: number
@@ -21,7 +20,16 @@ type StickerLine = {
   bubble: string
 }
 
-const variants: StickerVariant[] = ["sun", "bow", "star", "cat", "flower-girl", "strawberry"]
+type StickerAnchor = {
+  variant: StickerVariant
+  side: "left" | "right"
+  leftPercent: number
+  topPercent: number
+  size: number
+  rotate: number
+  duration: number
+  delay: number
+}
 
 const stickerLines: Record<StickerVariant, StickerLine> = {
   sun: { label: "sun", bubble: "hi hi, i am here." },
@@ -32,114 +40,31 @@ const stickerLines: Record<StickerVariant, StickerLine> = {
   strawberry: { label: "strawberry", bubble: "sweet little thoughts only." },
 }
 
-function makeStickers(count: number, width: number) {
-  const edgeMargin = width < 640 ? 10 : width < 1024 ? 16 : 24
-  const stickerSize = width < 640 ? [64, 96] : width < 1024 ? [82, 124] : [104, 164]
-  const gutterWidth = width < 640 ? Math.round(width * 0.24) : width < 1024 ? Math.round(width * 0.2) : Math.round(width * 0.16)
-
-  return Array.from({ length: count }, (_, index) => ({
-    id: `sticker-${index}`,
-    variant: variants[index % variants.length],
-    top: 8 + Math.random() * 84,
-    side: index % 2 === 0 ? "left" : "right",
-    left:
-      index % 2 === 0
-        ? edgeMargin + Math.random() * gutterWidth
-        : width - edgeMargin - (stickerSize[1] + Math.random() * gutterWidth),
-    size: stickerSize[0] + Math.round(Math.random() * (stickerSize[1] - stickerSize[0])),
-    rotate: -16 + Math.random() * 32,
-    duration: 4.8 + Math.random() * 3.4,
-    delay: Math.random() * 2.4,
-  }))
-}
-
-function StickerSvg({ variant }: { variant: StickerVariant }) {
-  switch (variant) {
-    case "sun":
-      return (
-        <svg viewBox="0 0 120 120" className="h-full w-full" aria-hidden="true">
-          <circle cx="60" cy="60" r="42" fill="#ffd96d" stroke="#9a6874" strokeWidth="4" />
-          <circle cx="48" cy="54" r="4" fill="#4a3a3f" />
-          <circle cx="72" cy="54" r="4" fill="#4a3a3f" />
-          <path d="M48 74 Q60 84 72 74" fill="none" stroke="#9a6874" strokeWidth="4" strokeLinecap="round" />
-        </svg>
-      )
-    case "bow":
-      return (
-        <svg viewBox="0 0 140 110" className="h-full w-full" aria-hidden="true">
-          <path
-            d="M68 50 C34 18 6 28 10 56 C13 77 35 83 54 68 C48 92 58 104 70 84 C82 104 92 92 86 68 C105 83 127 77 130 56 C134 28 106 18 72 50 Z"
-            fill="#ffb6cf"
-            stroke="#9a6874"
-            strokeWidth="4"
-            strokeLinejoin="round"
-          />
-          <path d="M68 48 L62 84 M72 48 L80 84" stroke="#d66f98" strokeWidth="3" strokeLinecap="round" />
-        </svg>
-      )
-    case "star":
-      return (
-        <svg viewBox="0 0 120 120" className="h-full w-full" aria-hidden="true">
-          <path
-            d="M60 14 L73 43 L105 47 L81 68 L88 101 L60 84 L32 101 L39 68 L15 47 L47 43 Z"
-            fill="#f0c44b"
-            stroke="#9a6874"
-            strokeWidth="4"
-            strokeLinejoin="round"
-          />
-        </svg>
-      )
-    case "cat":
-      return (
-        <svg viewBox="0 0 160 120" className="h-full w-full" aria-hidden="true">
-          <path
-            d="M34 46 Q56 22 98 24 Q132 25 144 52 Q141 77 112 80 Q107 99 91 100 Q68 102 60 84 Q36 84 22 72 Q21 54 34 46 Z"
-            fill="#f4df63"
-            stroke="#9a6874"
-            strokeWidth="4"
-            strokeLinejoin="round"
-          />
-          <path d="M56 41 L66 26 L73 43 M104 41 L116 28 L120 46" fill="#eec84f" stroke="#9a6874" strokeWidth="3" />
-          <circle cx="72" cy="58" r="4" fill="#4a3a3f" />
-          <circle cx="95" cy="58" r="4" fill="#4a3a3f" />
-          <path d="M79 67 Q84 71 89 67" fill="none" stroke="#9a6874" strokeWidth="3" strokeLinecap="round" />
-          <path d="M144 58 Q158 58 158 75 Q158 91 144 91" fill="none" stroke="#9a6874" strokeWidth="4" strokeLinecap="round" />
-        </svg>
-      )
-    case "flower-girl":
-      return (
-        <svg viewBox="0 0 120 150" className="h-full w-full" aria-hidden="true">
-          <ellipse cx="60" cy="62" rx="38" ry="48" fill="#111" stroke="#9a6874" strokeWidth="4" />
-          <rect x="38" y="44" width="44" height="72" rx="22" fill="#fff6f5" stroke="#9a6874" strokeWidth="4" />
-          <circle cx="50" cy="66" r="12" fill="#fff" stroke="#9a6874" strokeWidth="3" />
-          <circle cx="70" cy="66" r="12" fill="#fff" stroke="#9a6874" strokeWidth="3" />
-          <circle cx="50" cy="66" r="5" fill="#2f2025" />
-          <circle cx="70" cy="66" r="5" fill="#2f2025" />
-          <circle cx="44" cy="82" r="4" fill="#ffb6c8" />
-          <circle cx="76" cy="82" r="4" fill="#ffb6c8" />
-          <path d="M54 81 Q60 86 66 81" fill="none" stroke="#9a6874" strokeWidth="3" strokeLinecap="round" />
-          <path d="M48 110 Q60 122 72 110" fill="none" stroke="#9a6874" strokeWidth="3" strokeLinecap="round" />
-        </svg>
-      )
-    case "strawberry":
-      return (
-        <svg viewBox="0 0 110 150" className="h-full w-full" aria-hidden="true">
-          <rect x="14" y="18" width="82" height="114" rx="12" fill="#f5a0bc" stroke="#9a6874" strokeWidth="4" />
-          <text x="55" y="44" textAnchor="middle" fontSize="14" fontWeight="700" fill="#7e4556">
-            berry
-          </text>
-          <path d="M33 82 C38 62 52 52 64 52 C79 52 90 65 92 81 C96 101 81 118 62 118 C43 118 28 102 33 82 Z" fill="#f24a68" stroke="#9a6874" strokeWidth="3" />
-          <path d="M62 57 C67 47 78 46 83 53 C74 59 68 63 62 69 C56 63 49 59 40 53 C45 46 57 47 62 57 Z" fill="#80c86d" stroke="#9a6874" strokeWidth="3" />
-          <circle cx="50" cy="84" r="2.5" fill="#ffe9a8" />
-          <circle cx="69" cy="90" r="2.5" fill="#ffe9a8" />
-          <circle cx="58" cy="103" r="2.5" fill="#ffe9a8" />
-        </svg>
-      )
-  }
-}
+const stickerAnchors: StickerAnchor[] = [
+  { variant: "sun", side: "left", leftPercent: 4.8, topPercent: 8, size: 100, rotate: -10, duration: 6.2, delay: 0.1 },
+  { variant: "flower-girl", side: "left", leftPercent: 5.2, topPercent: 19, size: 86, rotate: -6, duration: 6.8, delay: 0.8 },
+  { variant: "star", side: "left", leftPercent: 7.4, topPercent: 31, size: 118, rotate: 7, duration: 5.6, delay: 0.2 },
+  { variant: "bow", side: "left", leftPercent: 4.8, topPercent: 45, size: 92, rotate: -8, duration: 6.7, delay: 1.1 },
+  { variant: "cat", side: "left", leftPercent: 7.3, topPercent: 59, size: 108, rotate: 5, duration: 5.9, delay: 0.4 },
+  { variant: "sun", side: "left", leftPercent: 4.8, topPercent: 74, size: 86, rotate: -3, duration: 6.5, delay: 1.2 },
+  { variant: "flower-girl", side: "left", leftPercent: 7.2, topPercent: 90, size: 100, rotate: 5, duration: 5.9, delay: 0.4 },
+  { variant: "bow", side: "right", leftPercent: 90.8, topPercent: 9, size: 92, rotate: 4, duration: 5.8, delay: 0.5 },
+  { variant: "cat", side: "right", leftPercent: 90.2, topPercent: 24, size: 110, rotate: -2, duration: 6.4, delay: 0.7 },
+  { variant: "strawberry", side: "right", leftPercent: 90.4, topPercent: 39, size: 110, rotate: 10, duration: 6.9, delay: 0.3 },
+  { variant: "star", side: "right", leftPercent: 90.1, topPercent: 55, size: 104, rotate: -5, duration: 5.5, delay: 0.2 },
+  { variant: "bow", side: "right", leftPercent: 90.5, topPercent: 71, size: 106, rotate: -7, duration: 6.3, delay: 0.6 },
+  { variant: "strawberry", side: "right", leftPercent: 90, topPercent: 88, size: 98, rotate: 4, duration: 5.7, delay: 1.4 },
+]
 
 export function FloatingAvatars() {
-  const [stickers, setStickers] = useState<FloatingSticker[]>([])
+  const stickers = useMemo<FloatingSticker[]>(
+    () =>
+      stickerAnchors.map((anchor, index) => ({
+        id: `sticker-${index}`,
+        ...anchor,
+      })),
+    [],
+  )
   const [activeId, setActiveId] = useState<string | null>(null)
   const clearTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -147,24 +72,6 @@ export function FloatingAvatars() {
     () => stickers.find((sticker) => sticker.id === activeId) ?? null,
     [activeId, stickers],
   )
-
-  useEffect(() => {
-    const updateStickers = () => {
-      const width = window.innerWidth
-      const count = width < 640 ? 6 : width < 1024 ? 10 : 14
-      setStickers(makeStickers(count, width))
-    }
-
-    updateStickers()
-    window.addEventListener("resize", updateStickers)
-
-    return () => {
-      window.removeEventListener("resize", updateStickers)
-      if (clearTimer.current) {
-        clearTimeout(clearTimer.current)
-      }
-    }
-  }, [])
 
   useEffect(() => {
     if (!activeId) {
@@ -187,7 +94,10 @@ export function FloatingAvatars() {
   }, [activeId])
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-30 h-full overflow-hidden select-none" aria-hidden="true">
+    <div
+      className="pointer-events-none absolute inset-0 z-30 hidden h-full overflow-hidden select-none 2xl:block"
+      aria-hidden="true"
+    >
       {stickers.map((sticker, index) => (
         <button
           key={sticker.id}
@@ -196,8 +106,8 @@ export function FloatingAvatars() {
           className={`floating-sticker pointer-events-auto ${index % 3 === 0 ? "drift-a" : index % 3 === 1 ? "drift-b" : "drift-c"}`}
           onClick={() => setActiveId(sticker.id)}
           style={{
-            top: `${sticker.top}%`,
-            left: `${sticker.left}px`,
+            top: `${sticker.topPercent}%`,
+            left: `${sticker.leftPercent}%`,
             width: `${sticker.size}px`,
             height: `${sticker.size}px`,
             ["--base-rotate" as string]: `${sticker.rotate}deg`,
@@ -210,7 +120,7 @@ export function FloatingAvatars() {
             <span
               className={`absolute ${
                 sticker.side === "right" ? "right-full mr-3" : "left-full ml-3"
-              } top-1/2 max-w-[9rem] -translate-y-1/2 rounded-[1.5rem] border border-border/50 bg-card px-3 py-2 text-left text-sm font-medium text-foreground shadow-[0_14px_30px_-18px_rgba(0,0,0,0.35)]`}
+              } top-1/2 max-w-[11rem] -translate-y-1/2 rounded-[1.5rem] border border-border/50 bg-card px-3.5 py-2.5 text-left text-sm font-medium text-foreground shadow-[0_14px_30px_-18px_rgba(0,0,0,0.35)]`}
             >
               <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-rose">
                 {stickerLines[sticker.variant].label}

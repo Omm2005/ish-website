@@ -1,7 +1,7 @@
 "use client"
 
-import Image from "next/image"
 import { Sparkles } from "lucide-react"
+import { MobilePegboard } from "@/components/mobile-pegboard"
 import { triggerSparkles } from "@/components/sparkle-controller"
 
 const stats = [
@@ -12,8 +12,8 @@ const stats = [
 
 export function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden px-6 pb-16 pt-12 md:pt-20">
-      <div className="pink-stripes absolute inset-x-0 top-16 h-[28rem] rounded-[3rem] opacity-[0.65] blur-[1px]" />
+    <section id="top" className="relative overflow-hidden px-4 pb-14 pt-10 sm:px-6 md:pt-20">
+      <div className="pink-stripes absolute inset-x-3 top-16 h-[28rem] rounded-[2rem] opacity-[0.65] blur-[1px] sm:inset-x-0 sm:rounded-[3rem]" />
 
       <div className="relative mx-auto max-w-6xl">
         <div className="mx-auto max-w-3xl text-center">
@@ -22,25 +22,27 @@ export function Hero() {
             welcome, friend
           </span>
 
-          <h1 className="mt-6 text-balance font-serif text-5xl leading-[1.05] text-foreground md:text-7xl">
+          <h1 className="mx-auto mt-6 max-w-[11ch] text-balance font-serif text-[2.85rem] leading-[1.03] text-foreground min-[390px]:text-[3.15rem] sm:max-w-none sm:text-5xl sm:leading-[1.03] md:text-6xl lg:text-7xl">
             Hi, I&apos;m{" "}
             <button
               type="button"
               onClick={triggerSparkles}
-              className="text-script font-normal text-rose transition-transform hover:scale-105"
+              className="inline-block text-script font-normal leading-[1.12] text-rose transition-transform hover:scale-105"
             >
               Ishita
             </button>{" "}
             and I build soft, story-driven digital things.
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
+          <MobilePegboard />
+
+          <p className="mx-auto mt-6 max-w-xl text-pretty text-base leading-7 text-muted-foreground sm:max-w-2xl sm:text-lg sm:leading-relaxed">
             A creative technologist and design student weaving together game development, UI/UX,
             and creative coding. I like interfaces that feel gentle, products that tell a story,
             and ideas that began as a note in the margin of a book.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <a
               href="#work"
               className="rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5"
@@ -56,43 +58,37 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative mx-auto mt-14 max-w-5xl">
-          <span className="absolute -left-2 top-6 z-10 rotate-[-8deg] rounded-full bg-butter px-4 py-2 text-xs font-bold uppercase tracking-[0.24em] text-foreground scrapbook-shadow md:-left-10">
+        <div className="relative mx-auto mt-14 hidden max-w-6xl xl:block">
+          <span className="absolute left-3 top-6 z-10 rotate-[-8deg] rounded-full bg-butter px-4 py-2 text-xs font-bold uppercase tracking-[0.24em] text-foreground scrapbook-shadow md:left-5">
             scrapbook mode
           </span>
-          <span className="absolute -right-1 bottom-8 z-10 rotate-[7deg] rounded-full bg-card px-5 py-2 text-sm font-semibold text-rose scrapbook-shadow md:-right-8">
+          <span className="absolute bottom-8 right-3 z-10 rotate-[7deg] rounded-full bg-card px-5 py-2 text-sm font-semibold text-rose scrapbook-shadow md:right-5">
             soft systems
           </span>
-          <p className="pointer-events-none absolute left-8 top-[-2.8rem] z-10 text-script text-5xl text-rose/80 md:left-16 md:text-7xl">
-            Typical Combo
-          </p>
 
           <div className="metal-tray rounded-[2.7rem] p-4 md:p-5">
             <div className="overflow-hidden rounded-[2rem] border border-white/70 bg-card">
-              <Image
+              <img
                 src="/images/ishita-collage.png"
-                alt="A scrapbook collage with bows, lilies, lemons, a vintage camera and the name Ishita Gautam in flowing script"
-                width={1400}
-                height={360}
-                priority
-                className="h-auto w-full"
+                alt="A pastel scrapbook collage with Ishita Gautam written in script"
+                className="aspect-[4/1] w-full object-cover"
               />
             </div>
           </div>
         </div>
 
-        <div className="mx-auto mt-10 grid max-w-3xl gap-4 md:grid-cols-3">
+        <div className="mx-auto mt-10 grid max-w-3xl gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3">
           {stats.map((stat, index) => (
             <div
               key={stat.label}
-              className={`paper-card rounded-[2rem] px-5 py-5 text-center ${
+              className={`paper-card rounded-[1.5rem] px-4 py-4 text-center sm:rounded-[2rem] sm:px-5 sm:py-5 ${
                 index === 1 ? "md:-translate-y-4" : ""
               }`}
             >
-              <div className="font-sans text-4xl font-semibold text-foreground md:text-5xl">
+              <div className="font-sans text-3xl font-semibold text-foreground sm:text-4xl md:text-5xl">
                 {stat.value}
               </div>
-              <div className="mt-1 text-xs font-medium uppercase tracking-[0.22em] text-muted-foreground">
+              <div className="mt-1 text-[0.68rem] font-medium uppercase leading-snug tracking-[0.14em] text-muted-foreground sm:text-xs sm:tracking-[0.18em]">
                 {stat.label}
               </div>
             </div>
