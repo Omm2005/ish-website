@@ -1,6 +1,6 @@
 "use client"
 
-import { Music, Music2, Volume2, VolumeX } from "lucide-react"
+import { Disc3, Music, Music2, Volume2, VolumeX } from "lucide-react"
 import { useRef, useState } from "react"
 import { StickerSvg } from "@/components/sticker-svg"
 
@@ -41,7 +41,15 @@ export function MusicWidget() {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 flex max-w-[calc(100vw-2rem)] flex-col items-end gap-2 sm:bottom-6 sm:right-6">
-      <audio ref={audioRef} src={AUDIO_SRC} loop preload="auto" onEnded={() => setIsPlaying(false)} />
+      <audio
+        ref={audioRef}
+        src={AUDIO_SRC}
+        loop
+        preload="auto"
+        onEnded={() => setIsPlaying(false)}
+        onPause={() => setIsPlaying(false)}
+        onPlay={() => setIsPlaying(true)}
+      />
 
       <div
         className={`mr-2 flex items-center gap-2 rounded-full border border-border/70 bg-card/95 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] scrapbook-shadow transition-all duration-300 ${
@@ -51,6 +59,12 @@ export function MusicWidget() {
       >
         <Volume2 className="size-3.5" />
         music is on!
+        <span className="equalizer ml-1 flex h-4 items-end gap-0.5" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </span>
       </div>
 
       <button
@@ -71,16 +85,33 @@ export function MusicWidget() {
             </span>
           ))}
 
-        <span className="absolute inset-2 opacity-35">
+        <span
+          className={`pointer-events-none absolute right-[4.4rem] top-1/2 hidden w-[8.9rem] -translate-y-1/2 rotate-[-3deg] rounded-[1rem] border border-white/80 bg-[#fffaf4] px-3 py-2 text-left scrapbook-shadow transition-all duration-300 sm:block ${
+            isPlaying ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0"
+          }`}
+          aria-hidden="true"
+        >
+          <span className="mb-1 flex items-center gap-1.5 text-[0.58rem] font-bold uppercase tracking-[0.18em] text-rose">
+            <Disc3 className="size-3" />
+            tiny vinyl
+          </span>
+          <span className="block truncate font-serif text-sm leading-tight text-foreground">Chérie</span>
+          <span className="mt-1 block text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+            now spinning
+          </span>
+        </span>
+
+        <span className="absolute inset-2 opacity-25">
           <StickerSvg variant="flower-girl" />
         </span>
         <span
-          className={`relative grid size-[4.1rem] place-items-center overflow-hidden rounded-full border-[3px] border-white bg-card shadow-[0_12px_24px_-18px_rgba(0,0,0,0.5)] sm:size-[5rem] ${
-            isPlaying ? "record-spin" : ""
-          }`}
+          className="record-face record-spin relative grid size-[4.1rem] place-items-center overflow-hidden rounded-full border-[3px] border-white bg-card shadow-[0_12px_24px_-18px_rgba(0,0,0,0.5)] sm:size-[5rem]"
+          style={{ animationPlayState: isPlaying ? "running" : "paused" }}
         >
           <img src={COVER_SRC} alt="" className="h-full w-full object-cover" draggable={false} />
-          <span className="absolute size-3 rounded-full border border-white/80 bg-card/90 sm:size-3.5" />
+          <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,transparent_0_27%,rgba(255,255,255,0.24)_28%,transparent_30%,transparent_42%,rgba(60,36,46,0.2)_43%,transparent_45%)]" />
+          <span className="absolute size-4 rounded-full border border-white/90 bg-card/95 shadow-sm sm:size-5" />
+          <span className="absolute size-1.5 rounded-full bg-rose/75 sm:size-2" />
         </span>
         <span className="absolute -left-1 bottom-1 grid size-7 place-items-center rounded-full border border-white/80 bg-butter text-foreground shadow-sm">
           {isPlaying ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
@@ -90,6 +121,38 @@ export function MusicWidget() {
       <style jsx>{`
         .record-spin {
           animation: record-spin 3.6s linear infinite;
+        }
+
+        .record-face {
+          transform-origin: center;
+        }
+
+        .equalizer span {
+          display: block;
+          width: 3px;
+          border-radius: 999px;
+          background: currentColor;
+          animation: equalizer-bounce 0.7s ease-in-out infinite;
+        }
+
+        .equalizer span:nth-child(1) {
+          height: 8px;
+          animation-delay: 0s;
+        }
+
+        .equalizer span:nth-child(2) {
+          height: 13px;
+          animation-delay: 0.12s;
+        }
+
+        .equalizer span:nth-child(3) {
+          height: 10px;
+          animation-delay: 0.24s;
+        }
+
+        .equalizer span:nth-child(4) {
+          height: 15px;
+          animation-delay: 0.36s;
         }
 
         .music-note {
@@ -124,9 +187,22 @@ export function MusicWidget() {
           }
         }
 
+        @keyframes equalizer-bounce {
+          0%,
+          100% {
+            transform: scaleY(0.45);
+            opacity: 0.55;
+          }
+          50% {
+            transform: scaleY(1);
+            opacity: 1;
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .record-spin,
-          .music-note {
+          .music-note,
+          .equalizer span {
             animation: none;
           }
 

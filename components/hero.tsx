@@ -1,8 +1,9 @@
 "use client"
 
+import type { MouseEvent } from "react"
 import { Sparkles } from "lucide-react"
 import { MobilePegboard } from "@/components/mobile-pegboard"
-import { triggerSparkles } from "@/components/sparkle-controller"
+import { triggerSparkles, triggerStickerPop } from "@/components/sparkle-controller"
 
 const stats = [
   { value: "2.9", label: "years exploring" },
@@ -11,6 +12,10 @@ const stats = [
 ]
 
 export function Hero() {
+  const popSticker = (event: MouseEvent<HTMLElement>, label: string) => {
+    triggerStickerPop(event, label)
+  }
+
   return (
     <section id="top" className="relative overflow-hidden px-4 pb-14 pt-10 sm:px-6 md:pt-20">
       <div className="pink-stripes absolute inset-x-3 top-16 h-[28rem] rounded-[2rem] opacity-[0.65] blur-[1px] sm:inset-x-0 sm:rounded-[3rem]" />
@@ -26,7 +31,10 @@ export function Hero() {
             Hi, I&apos;m{" "}
             <button
               type="button"
-              onClick={triggerSparkles}
+              onClick={(event) => {
+                triggerSparkles()
+                popSticker(event, "Ishita")
+              }}
               className="inline-block text-script font-normal leading-[1.12] text-rose transition-transform hover:scale-105"
             >
               Ishita
@@ -45,12 +53,14 @@ export function Hero() {
           <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <a
               href="#work"
+              onClick={(event) => popSticker(event, "work")}
               className="rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5"
             >
               See my work
             </a>
             <a
               href="#about"
+              onClick={(event) => popSticker(event, "about")}
               className="rounded-full border border-border bg-card px-7 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary"
             >
               More about me

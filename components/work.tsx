@@ -1,4 +1,8 @@
+"use client"
+
+import type { KeyboardEvent, MouseEvent } from "react"
 import Image from "next/image"
+import { triggerStickerPop } from "@/components/sparkle-controller"
 
 const projects = [
   {
@@ -28,6 +32,25 @@ const projects = [
 ]
 
 export function Work() {
+  const popProjectSticker = (event: MouseEvent<HTMLElement>, label: string) => {
+    triggerStickerPop(event, label)
+  }
+
+  const popProjectStickerFromKeyboard = (event: KeyboardEvent<HTMLElement>, label: string) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return
+    }
+
+    const rect = event.currentTarget.getBoundingClientRect()
+    triggerStickerPop(
+      {
+        clientX: rect.left + rect.width / 2,
+        clientY: rect.top + rect.height / 2,
+      },
+      label,
+    )
+  }
+
   return (
     <section id="work" className="px-4 py-16 sm:px-6 md:py-28">
       <div className="pink-stripes mx-auto max-w-6xl rounded-[2.4rem] px-4 py-6 sm:rounded-[3rem] sm:py-8 md:px-8">
@@ -55,9 +78,14 @@ export function Work() {
             {projects.map((project, index) => (
               <article
                 key={project.title}
+                role="button"
+                tabIndex={0}
+                aria-label={`Pop a sticker for ${project.title}`}
+                onClick={(event) => popProjectSticker(event, project.tag)}
+                onKeyDown={(event) => popProjectStickerFromKeyboard(event, project.tag)}
                 className={`paper-wobble group relative grid gap-4 rounded-[1.7rem] border border-white/70 p-4 shadow-[0_18px_35px_-28px_rgba(80,45,60,0.45)] sm:grid-cols-[220px_1fr] sm:items-center sm:rounded-[2rem] ${
                   project.shelf
-                } ${index % 2 === 0 ? "[--tilt:-0.8deg]" : "[--tilt:0.8deg]"}`}
+                } ${index % 2 === 0 ? "[--tilt:-0.8deg]" : "[--tilt:0.8deg]"} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
               >
                 <span className="sticker-peel absolute -top-3 left-5 z-10 rounded-full bg-card px-4 py-2 text-[0.66rem] font-bold uppercase tracking-[0.16em] text-foreground scrapbook-shadow">
                   {project.callout}
