@@ -1,6 +1,7 @@
 "use client"
 
 import type { MouseEvent } from "react"
+import Image from "next/image"
 import { Sparkles } from "lucide-react"
 import { MobilePegboard } from "@/components/mobile-pegboard"
 import { triggerSparkles, triggerStickerPop } from "@/components/sparkle-controller"
@@ -85,9 +86,13 @@ export function Hero() {
 
           <div className="metal-tray rounded-[2.7rem] p-4 md:p-5">
             <div className="overflow-hidden rounded-[2rem] border border-white/70 bg-card">
-              <img
-                src="/images/ishita-collage.png"
+              <Image
+                src="/images/ishita-collage.webp"
                 alt="A pastel scrapbook collage with Ishita Gautam written in script"
+                width={1400}
+                height={350}
+                sizes="(min-width: 1280px) 1152px, 100vw"
+                loading="lazy"
                 className="aspect-[4/1] w-full object-cover"
               />
             </div>

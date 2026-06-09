@@ -6,7 +6,7 @@ import { triggerStickerPop } from "@/components/sparkle-controller"
 
 const projects = [
   {
-    image: "/images/work-game.png",
+    image: "/images/work-game.webp",
     callout: "FOUND IT FIRST ••",
     shelf: "bg-[#f8c8da]",
     tag: "Game Design",
@@ -14,7 +14,7 @@ const projects = [
     body: "A cozy exploration game concept built around mood and gentle discovery — every screen designed to feel like a place you could rest.",
   },
   {
-    image: "/images/work-uiux.png",
+    image: "/images/work-uiux.webp",
     callout: "HANDMADE. HEARTMADE",
     shelf: "bg-[#d8ead7]",
     tag: "UI / UX",
@@ -22,7 +22,7 @@ const projects = [
     body: "A rounded, friendly mobile design system — components, flows, and prototypes that keep products warm and easy to use.",
   },
   {
-    image: "/images/work-code.png",
+    image: "/images/work-code.webp",
     callout: "FOOD FOR THOUGHT???",
     shelf: "bg-[#cdddf2]",
     tag: "Creative Coding",
@@ -97,6 +97,8 @@ export function Work() {
                     alt={project.title}
                     width={600}
                     height={450}
+                    sizes="(min-width: 640px) 220px, 100vw"
+                    loading="lazy"
                     className="aspect-[4/3] w-full rounded-[1rem] object-cover transition-transform duration-500 group-hover:scale-105 sm:rounded-[1.2rem]"
                   />
                 </div>
