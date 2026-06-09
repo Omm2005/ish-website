@@ -2,10 +2,25 @@
 
 import { Disc3, Music, Music2, Volume2, VolumeX } from "lucide-react"
 import { useRef, useState } from "react"
-import { StickerSvg } from "@/components/sticker-svg"
+import { StickerSvg, type StickerVariant } from "@/components/sticker-svg"
 
-const AUDIO_SRC = "/audio/cherie.mp3"
-const COVER_SRC = "/audio/cherie-cover.jpg"
+type Track = {
+  title: string
+  src: string
+  avatar: StickerVariant
+}
+
+const tracks: Track[] = [
+  { title: "Chérie", src: "/audio/cherie.mp3", avatar: "flower-girl" },
+  { title: "Jello", src: "/audio/Jello.mp3", avatar: "sun" },
+  { title: "La Madrague", src: "/audio/La Madrague.mp3", avatar: "bow" },
+  { title: "Tabun", src: "/audio/たぶん.mp3", avatar: "star" },
+  { title: "Caramellow", src: "/audio/Caramellow.mp3", avatar: "strawberry" },
+  { title: "Movin..", src: "/audio/Movin..mp3", avatar: "cat" },
+  { title: "Wind", src: "/audio/Wind.mp3", avatar: "sun" },
+  { title: "Summer", src: "/audio/summer.mp3", avatar: "bow" },
+  { title: "Daydream", src: "/audio/Daydream.mp3", avatar: "flower-girl" },
+]
 
 const notes = [
   { icon: Music, left: "-1.3rem", top: "-1.4rem", delay: "0s", size: "1.05rem" },
@@ -17,6 +32,22 @@ const notes = [
 export function MusicWidget() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const selectedTrack = tracks[0]
+
+  const playAudio = async () => {
+    const audio = audioRef.current
+
+    if (!audio) {
+      return
+    }
+
+    try {
+      await audio.play()
+      setIsPlaying(true)
+    } catch {
+      setIsPlaying(false)
+    }
+  }
 
   const toggleMusic = async () => {
     const audio = audioRef.current
@@ -31,21 +62,16 @@ export function MusicWidget() {
       return
     }
 
-    try {
-      await audio.play()
-      setIsPlaying(true)
-    } catch {
-      setIsPlaying(false)
-    }
+    await playAudio()
   }
 
   return (
     <div className="fixed bottom-4 right-4 z-50 flex max-w-[calc(100vw-2rem)] flex-col items-end gap-2 sm:bottom-6 sm:right-6">
       <audio
         ref={audioRef}
-        src={AUDIO_SRC}
+        src={selectedTrack.src}
         loop
-        preload="auto"
+        preload="metadata"
         onEnded={() => setIsPlaying(false)}
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
@@ -71,7 +97,7 @@ export function MusicWidget() {
         type="button"
         onClick={toggleMusic}
         className="group relative flex size-20 items-center justify-center rounded-full border border-white/80 bg-card/95 p-2 scrapbook-shadow transition-transform hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:size-24"
-        aria-label={isPlaying ? "Stop music" : "Play Chérie"}
+        aria-label={isPlaying ? "Stop music" : `Play ${selectedTrack.title}`}
         aria-pressed={isPlaying}
       >
         {isPlaying &&
@@ -95,23 +121,17 @@ export function MusicWidget() {
             <Disc3 className="size-3" />
             tiny vinyl
           </span>
-          <span className="block truncate font-serif text-sm leading-tight text-foreground">Chérie</span>
+          <span className="block truncate font-serif text-sm leading-tight text-foreground">{selectedTrack.title}</span>
           <span className="mt-1 block text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
             now spinning
           </span>
         </span>
 
-        <span className="absolute inset-2 opacity-25">
-          <StickerSvg variant="flower-girl" />
-        </span>
         <span
           className="record-face record-spin relative grid size-[4.1rem] place-items-center overflow-hidden rounded-full border-[3px] border-white bg-card shadow-[0_12px_24px_-18px_rgba(0,0,0,0.5)] sm:size-[5rem]"
           style={{ animationPlayState: isPlaying ? "running" : "paused" }}
         >
-          <img src={COVER_SRC} alt="" className="h-full w-full object-cover" draggable={false} />
-          <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,transparent_0_27%,rgba(255,255,255,0.24)_28%,transparent_30%,transparent_42%,rgba(60,36,46,0.2)_43%,transparent_45%)]" />
-          <span className="absolute size-4 rounded-full border border-white/90 bg-card/95 shadow-sm sm:size-5" />
-          <span className="absolute size-1.5 rounded-full bg-rose/75 sm:size-2" />
+          <VinylFace avatar={selectedTrack.avatar} />
         </span>
         <span className="absolute -left-1 bottom-1 grid size-7 place-items-center rounded-full border border-white/80 bg-butter text-foreground shadow-sm">
           {isPlaying ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
@@ -212,5 +232,21 @@ export function MusicWidget() {
         }
       `}</style>
     </div>
+  )
+}
+
+function VinylFace({ avatar }: { avatar: StickerVariant }) {
+  return (
+    <>
+      <span className="absolute inset-0 rounded-full bg-[repeating-radial-gradient(circle_at_center,#2c2228_0_4px,#3f3038_4px_6px)]" />
+      <span className="absolute inset-[17%] overflow-hidden rounded-full border-2 border-white/80 bg-[#fff8ee]">
+        <span className="absolute inset-1.5">
+          <StickerSvg variant={avatar} />
+        </span>
+      </span>
+      <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,transparent_0_27%,rgba(255,255,255,0.24)_28%,transparent_30%,transparent_42%,rgba(255,255,255,0.16)_43%,transparent_45%)]" />
+      <span className="absolute size-4 rounded-full border border-white/90 bg-card/95 shadow-sm sm:size-5" />
+      <span className="absolute size-1.5 rounded-full bg-rose/75 sm:size-2" />
+    </>
   )
 }
