@@ -7,6 +7,10 @@ import { SparkleBurst } from "@/components/sparkle-burst"
 const SPARKLE_EVENT = "ishita:sparkle"
 const CLICK_STAR_LIFETIME = 1200
 const CLICK_STAR_COUNT = 12
+const SCREEN_CONFETTI_COUNT = 90
+const SPAM_CLICK_COUNT = 6
+const SPAM_CLICK_WINDOW = 900
+const SCREEN_CONFETTI_COOLDOWN = 1600
 
 type ClickStar = {
   id: number
@@ -43,9 +47,11 @@ export function SparkleController() {
 
   useEffect(() => {
     let nextId = 0
+    let clickTimes: number[] = []
+    let lastScreenConfettiAt = 0
 
-    const dropStars = (event: PointerEvent) => {
-      const stars = Array.from({ length: CLICK_STAR_COUNT }, (_, index) => {
+    const createStars = (x: number, y: number, count: number, delayStep = 12) => {
+      return Array.from({ length: count }, (_, index) => {
         const angle = -155 + (310 / CLICK_STAR_COUNT) * index + (Math.random() * 16 - 8)
         const distance = 42 + Math.random() * 58
         const radians = (angle * Math.PI) / 180
@@ -57,16 +63,52 @@ export function SparkleController() {
           drift: Math.cos(radians) * distance,
           lift: Math.sin(radians) * distance,
           size: 9 + Math.random() * 12,
-          delay: index * 12,
+          delay: index * delayStep,
           rotate: (Math.random() > 0.5 ? 1 : -1) * (140 + Math.random() * 160),
         }
       })
+    }
 
-      setClickStars((current) => [...current.slice(-48), ...stars])
+    const createScreenConfetti = () => {
+      return Array.from({ length: SCREEN_CONFETTI_COUNT }, () => {
+        const angle = Math.random() * 360
+        const distance = 24 + Math.random() * 74
+        const radians = (angle * Math.PI) / 180
+
+        return {
+          id: nextId++,
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          drift: Math.cos(radians) * distance,
+          lift: Math.sin(radians) * distance,
+          size: 8 + Math.random() * 15,
+          delay: Math.random() * 420,
+          rotate: (Math.random() > 0.5 ? 1 : -1) * (160 + Math.random() * 220),
+        }
+      })
+    }
+
+    const dropStars = (event: PointerEvent) => {
+      const now = window.performance.now()
+      clickTimes = [...clickTimes.filter((time) => now - time < SPAM_CLICK_WINDOW), now]
+
+      const localStars = createStars(event.clientX, event.clientY, CLICK_STAR_COUNT)
+      const screenStars =
+        clickTimes.length >= SPAM_CLICK_COUNT && now - lastScreenConfettiAt > SCREEN_CONFETTI_COOLDOWN
+          ? createScreenConfetti()
+          : []
+      const stars = [...localStars, ...screenStars]
+
+      if (screenStars.length > 0) {
+        lastScreenConfettiAt = now
+        clickTimes = []
+      }
+
+      setClickStars((current) => [...current.slice(-120), ...stars])
 
       window.setTimeout(() => {
         setClickStars((current) => current.filter((star) => !stars.some((newStar) => newStar.id === star.id)))
-      }, CLICK_STAR_LIFETIME + CLICK_STAR_COUNT * 35)
+      }, CLICK_STAR_LIFETIME + 500)
     }
 
     window.addEventListener("pointerdown", dropStars, { passive: true })
