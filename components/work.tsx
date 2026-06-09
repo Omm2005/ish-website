@@ -70,11 +70,11 @@ export function Work() {
         </div>
 
         <div className="relative mt-10 overflow-hidden rounded-[2rem] border border-[#e8cbd5] bg-[#fffaf4] p-3 sm:mt-12 sm:rounded-[2.8rem] sm:p-5 md:p-7">
-          <p className="pointer-events-none mb-3 text-script text-[2.45rem] leading-[1.15] text-rose/80 sm:absolute sm:left-6 sm:top-[-2.5rem] sm:mb-0 sm:text-5xl md:left-12 md:text-7xl">
-            What&apos;s In my Tincase
+          <p className="pointer-events-none mb-5 max-w-full break-words px-2 text-script text-[2.15rem] leading-[1.05] text-rose/80 [overflow-wrap:anywhere] sm:px-3 sm:text-5xl md:px-5 md:text-6xl">
+            What&apos;s in my tin case
           </p>
 
-          <div className="space-y-5 pt-2 sm:pt-10">
+          <div className="space-y-5 pt-1">
             {projects.map((project, index) => (
               <article
                 key={project.title}
@@ -87,7 +87,7 @@ export function Work() {
                   project.shelf
                 } ${index % 2 === 0 ? "[--tilt:-0.8deg]" : "[--tilt:0.8deg]"} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
               >
-                <span className="sticker-peel absolute -top-3 left-5 z-10 rounded-full bg-card px-4 py-2 text-[0.66rem] font-bold uppercase tracking-[0.16em] text-foreground scrapbook-shadow">
+                <span className="sticker-peel absolute -top-3 left-5 right-5 z-10 mx-auto w-fit max-w-[calc(100%-2.5rem)] rounded-full bg-card px-3 py-2 text-center text-[0.62rem] font-bold uppercase leading-snug tracking-[0.12em] text-foreground scrapbook-shadow sm:left-5 sm:right-auto sm:mx-0 sm:px-4 sm:text-[0.66rem] sm:tracking-[0.16em]">
                   {project.callout}
                 </span>
                 <div className="relative overflow-hidden rounded-[1.4rem] border border-white/80 bg-card p-2.5 sm:rounded-[1.7rem] sm:p-3">
@@ -100,14 +100,14 @@ export function Work() {
                     className="aspect-[4/3] w-full rounded-[1rem] object-cover transition-transform duration-500 group-hover:scale-105 sm:rounded-[1.2rem]"
                   />
                 </div>
-                <div className="rounded-[1.3rem] bg-card/85 p-5">
-                  <span className="w-fit max-w-full rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase leading-none tracking-[0.14em] text-accent-foreground">
+                <div className="min-w-0 rounded-[1.3rem] bg-card/85 p-4 sm:p-5">
+                  <span className="w-fit max-w-full break-words rounded-full bg-accent px-3 py-1 text-[0.68rem] font-semibold uppercase leading-snug tracking-[0.1em] text-accent-foreground sm:text-xs sm:tracking-[0.14em]">
                     {project.tag}
                   </span>
-                  <h3 className="mt-3 font-sans text-[1.55rem] leading-tight font-semibold text-foreground sm:text-2xl">
+                  <h3 className="mt-3 break-words font-sans text-[1.45rem] leading-tight font-semibold text-foreground [overflow-wrap:anywhere] sm:text-2xl">
                     {project.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-2 break-words text-sm leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
                     {project.body}
                   </p>
                 </div>

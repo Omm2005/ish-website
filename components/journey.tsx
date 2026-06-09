@@ -61,13 +61,13 @@ export function Journey() {
                 i % 2 === 0 ? "[--tilt:-1.5deg]" : "[--tilt:1.4deg]"
               } scrapbook-shadow`}
             >
-              <div className="absolute right-5 top-5 z-10 flex h-20 w-16 items-center justify-center rounded-[0.5rem] border border-[#eeb7cb] bg-[#fde4ef] text-center text-[0.56rem] font-bold uppercase tracking-[0.08em] text-rose">
+              <div className="absolute right-5 top-5 z-10 hidden h-20 w-16 items-center justify-center rounded-[0.5rem] border border-[#eeb7cb] bg-[#fde4ef] text-center text-[0.56rem] font-bold uppercase tracking-[0.08em] text-rose sm:flex">
                 Ishita
                 <br />
                 {i + 1}
                 <br />✦
               </div>
-              <div className="absolute left-5 top-5 z-10 h-8 w-24 rotate-[-8deg] bg-[#f4c244]/80" />
+              <div className="absolute left-5 top-5 z-10 hidden h-8 w-24 rotate-[-8deg] bg-[#f4c244]/80 sm:block" />
               <div className="absolute left-6 top-6 h-20 w-20 rounded-full bg-white/30 blur-2xl sm:left-8 sm:h-24 sm:w-24" />
               <div className="absolute right-8 top-10 hidden h-20 w-20 rounded-full border border-white/50 bg-card/30 lg:block" />
 
@@ -78,12 +78,12 @@ export function Journey() {
                       <p className="max-w-[14ch] text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground sm:max-w-none sm:text-xs sm:tracking-[0.22em]">
                         {item.period}
                       </p>
-                      <span className="shrink-0 rounded-full border border-rose/40 bg-primary/25 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-rose sm:text-xs sm:tracking-[0.18em]">
+                      <span className="shrink-0 rounded-full border border-rose/40 bg-primary/25 px-3 py-1 text-[0.68rem] font-semibold uppercase leading-snug tracking-[0.12em] text-rose sm:text-xs sm:tracking-[0.18em]">
                         page {i + 1}
                       </span>
                     </div>
 
-                    <p className="mt-4 text-script text-[2.35rem] leading-[1.15] text-rose sm:mt-5 sm:text-4xl lg:text-5xl">
+                    <p className="mt-4 text-script text-[2rem] leading-[1.12] text-rose sm:mt-5 sm:text-4xl lg:text-5xl">
                       Scrapbook Notes
                     </p>
                     <h3 className="mt-3 max-w-full break-words font-sans text-[1.18rem] leading-[1.18] font-semibold text-foreground [overflow-wrap:anywhere] sm:font-serif sm:text-3xl sm:leading-tight sm:font-normal lg:text-4xl">
@@ -125,13 +125,13 @@ export function Journey() {
                   </div>
 
                   <div className="mt-5 flex flex-wrap gap-3 sm:mt-6">
-                    <span className="rotate-[-3deg] rounded-full bg-card px-4 py-2 text-[0.95rem] font-medium leading-snug text-muted-foreground scrapbook-shadow sm:text-sm">
+                    <span className="max-w-full break-words rotate-[-3deg] rounded-full bg-card px-4 py-2 text-[0.95rem] font-medium leading-snug text-muted-foreground scrapbook-shadow [overflow-wrap:anywhere] sm:text-sm">
                       internship
                     </span>
-                    <span className="rotate-[2deg] rounded-full bg-card px-4 py-2 text-[0.95rem] font-medium leading-snug text-muted-foreground scrapbook-shadow sm:text-sm">
+                    <span className="max-w-full break-words rotate-[2deg] rounded-full bg-card px-4 py-2 text-[0.95rem] font-medium leading-snug text-muted-foreground scrapbook-shadow [overflow-wrap:anywhere] sm:text-sm">
                       growth era
                     </span>
-                    <span className="rotate-[-2deg] rounded-full bg-card px-4 py-2 text-[0.95rem] font-medium leading-snug text-muted-foreground scrapbook-shadow sm:text-sm">
+                    <span className="max-w-full break-words rotate-[-2deg] rounded-full bg-card px-4 py-2 text-[0.95rem] font-medium leading-snug text-muted-foreground scrapbook-shadow [overflow-wrap:anywhere] sm:text-sm">
                       story point
                     </span>
                   </div>

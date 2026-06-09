@@ -98,7 +98,7 @@ export function Currently() {
                 key={title}
                 type="button"
                 onClick={(event) => popSticker(event, label)}
-                className="paper-card paper-wobble group relative min-h-[13rem] overflow-hidden rounded-[1.45rem] p-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:rounded-[1.65rem]"
+                className="paper-card paper-wobble group relative min-h-[13rem] min-w-0 overflow-hidden rounded-[1.45rem] p-4 pb-12 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:rounded-[1.65rem] lg:min-h-[14.5rem]"
                 style={{ "--tilt": tilt } as CSSProperties}
               >
                 <span className="absolute -right-4 -top-3 size-16 rotate-12 opacity-80 transition-transform duration-300 group-hover:rotate-0 group-hover:scale-110">
@@ -107,14 +107,16 @@ export function Currently() {
                 <span className="relative z-10 inline-flex size-9 items-center justify-center rounded-full border border-border/70 bg-card/90 text-rose shadow-sm">
                   <Icon className="size-4" />
                 </span>
-                <span className="relative z-10 mt-5 block text-[0.65rem] font-bold uppercase tracking-[0.22em] text-muted-foreground">
+                <span className="relative z-10 mt-5 block max-w-[calc(100%-2.4rem)] break-words text-[0.65rem] font-bold uppercase leading-snug tracking-[0.16em] text-muted-foreground sm:tracking-[0.2em]">
                   currently {title}
                 </span>
-                <span className="relative z-10 mt-2 block font-serif text-xl leading-snug text-foreground">
+                <span className="relative z-10 mt-2 block break-words font-serif text-xl leading-snug text-foreground [overflow-wrap:anywhere]">
                   {value}
                 </span>
-                <span className="relative z-10 mt-3 block text-sm leading-6 text-foreground/70">{detail}</span>
-                <span className="absolute bottom-3 right-4 rotate-[-5deg] text-script text-2xl leading-none text-rose/70">
+                <span className="relative z-10 mt-3 block break-words text-sm leading-6 text-foreground/70 [overflow-wrap:anywhere]">
+                  {detail}
+                </span>
+                <span className="absolute bottom-3 right-4 max-w-[calc(100%-2rem)] rotate-[-5deg] truncate text-script text-2xl leading-none text-rose/70">
                   {label}
                 </span>
               </button>

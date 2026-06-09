@@ -66,12 +66,21 @@ export function FloatingAvatars() {
     [],
   )
   const [activeId, setActiveId] = useState<string | null>(null)
+  const [isReady, setIsReady] = useState(false)
   const clearTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const activeSticker = useMemo(
     () => stickers.find((sticker) => sticker.id === activeId) ?? null,
     [activeId, stickers],
   )
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setIsReady(true)
+    }, 350)
+
+    return () => window.clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     if (!activeId) {
@@ -95,7 +104,9 @@ export function FloatingAvatars() {
 
   return (
     <div
-      className="pointer-events-none absolute inset-0 z-30 hidden h-full overflow-hidden select-none 2xl:block"
+      className={`pointer-events-none absolute inset-0 z-30 hidden h-full overflow-hidden select-none transition-opacity duration-300 2xl:block ${
+        isReady ? "opacity-100" : "opacity-0"
+      }`}
       aria-hidden="true"
     >
       {stickers.map((sticker, index) => (
@@ -103,7 +114,7 @@ export function FloatingAvatars() {
           key={sticker.id}
           type="button"
           aria-label={`Open dialog from ${sticker.variant}`}
-          className={`floating-sticker pointer-events-auto ${index % 3 === 0 ? "drift-a" : index % 3 === 1 ? "drift-b" : "drift-c"}`}
+          className={`floating-sticker pointer-events-auto ${isReady ? (index % 3 === 0 ? "drift-a" : index % 3 === 1 ? "drift-b" : "drift-c") : ""}`}
           onClick={() => setActiveId(sticker.id)}
           style={{
             top: `${sticker.topPercent}%`,
@@ -135,6 +146,7 @@ export function FloatingAvatars() {
         .floating-sticker {
           position: absolute;
           opacity: 0.92;
+          transform: translate(-50%, -50%) rotate(var(--base-rotate));
           filter: drop-shadow(0 12px 22px rgba(201, 120, 139, 0.24));
           will-change: transform;
           border: 0;
@@ -146,14 +158,17 @@ export function FloatingAvatars() {
 
         .drift-a {
           animation: driftA ease-in-out infinite;
+          animation-fill-mode: both;
         }
 
         .drift-b {
           animation: driftB ease-in-out infinite;
+          animation-fill-mode: both;
         }
 
         .drift-c {
           animation: driftC ease-in-out infinite;
+          animation-fill-mode: both;
         }
 
         @keyframes driftA {

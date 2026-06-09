@@ -41,10 +41,10 @@ export function Contact() {
               </div>
             </div>
 
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-5 sm:gap-6">
               <div className="w-full max-w-[300px] rounded-[14px] bg-[#f7c8d8] p-[10px] shadow-[0_8px_32px_rgba(200,96,144,0.18)] sm:rotate-[-2deg] transition-transform duration-300 hover:rotate-0 hover:scale-[1.02]">
                 <div className="postcard-lace flex min-h-[180px] items-center justify-center rounded-[10px] border-white/65">
-                  <p className="text-center text-script text-[3rem] leading-[1.16] text-white drop-shadow-[0_2px_8px_rgba(168,72,120,0.25)]">
+                  <p className="text-center text-script text-[clamp(2.25rem,13vw,3rem)] leading-[1.12] text-white drop-shadow-[0_2px_8px_rgba(168,72,120,0.25)]">
                     Tourist
                     <br />
                     Trap
@@ -52,22 +52,22 @@ export function Contact() {
                 </div>
               </div>
 
-              <div className="w-full max-w-[220px] text-center">
+              <div className="w-full max-w-[240px] text-center">
                 <div className="mb-3 flex items-center justify-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#b08898]">
                   <span className="h-px w-[18px] bg-[#e8a0bb]" />
                   a little note
                   <span className="h-px w-[18px] bg-[#e8a0bb]" />
                 </div>
-                <p className="font-serif text-base leading-7 italic text-[#7a5a68]">
+                <p className="text-pretty font-serif text-base leading-7 italic text-[#7a5a68]">
                   &quot;You lure in curious collaborators and make them want to stay forever.&quot;
                 </p>
                 <p className="mt-2 text-script text-2xl leading-[1.2] text-[#c86090]">love, Ishita</p>
               </div>
 
-              <div className="relative w-full max-w-[300px] rounded-[14px] border-2 border-[#f7c8d8] bg-white p-[18px] pb-8 shadow-[0_8px_32px_rgba(200,96,144,0.14)] sm:rotate-[1.5deg] transition-transform duration-300 hover:rotate-0 hover:scale-[1.02]">
+              <div className="relative w-full max-w-[300px] rounded-[14px] border-2 border-[#f7c8d8] bg-white p-[16px] pb-10 shadow-[0_8px_32px_rgba(200,96,144,0.14)] transition-transform duration-300 hover:scale-[1.02] sm:rotate-[1.5deg] sm:p-[18px] sm:pb-8 sm:hover:rotate-0">
                 <div className="grid gap-[14px] sm:grid-cols-[1.2fr_1fr]">
                   <div className="flex items-center text-[0.88rem] leading-[1.8] text-[#c86090]">
-                    <p className="break-words text-script text-[1.2rem] leading-[1.65] [overflow-wrap:anywhere]">
+                    <p className="break-words text-script text-[1.1rem] leading-[1.55] [overflow-wrap:anywhere] sm:text-[1.2rem] sm:leading-[1.65]">
                       You lure in
                       <br />
                       curious collaborators
@@ -86,17 +86,17 @@ export function Contact() {
                         Gautam
                         <br />✦
                       </div>
-                      <div>
-                        <div className="break-words text-[0.68rem] leading-[1.7] text-[#7a5a68] [overflow-wrap:anywhere]">Claire &amp; Mies energy</div>
+                      <div className="min-w-0">
+                        <div className="break-words text-[0.68rem] leading-[1.55] text-[#7a5a68] [overflow-wrap:anywhere] sm:leading-[1.7]">Claire &amp; Mies energy</div>
                         <div className="my-[2px] h-px bg-[#c860902e]" />
-                        <div className="break-words text-[0.68rem] leading-[1.7] text-[#7a5a68] [overflow-wrap:anywhere]">Bengaluru, India</div>
+                        <div className="break-words text-[0.68rem] leading-[1.55] text-[#7a5a68] [overflow-wrap:anywhere] sm:leading-[1.7]">Bengaluru, India</div>
                         <div className="my-[2px] h-px bg-[#c860902e]" />
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <p className="absolute inset-x-[18px] bottom-[10px] text-right text-[0.54rem] leading-snug tracking-[0.04em] text-[#b08898]">
+                <p className="absolute inset-x-[12px] bottom-[10px] truncate text-right text-[0.5rem] leading-snug tracking-[0.02em] text-[#b08898] sm:inset-x-[18px] sm:text-[0.54rem] sm:tracking-[0.04em]">
                   @ishitagautam · tourist trap by morgan elizabeth
                 </p>
               </div>
@@ -104,7 +104,7 @@ export function Contact() {
           </div>
         </div>
 
-        <footer className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/60 pt-8 text-sm text-muted-foreground sm:flex-row">
+        <footer className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/60 pt-8 text-center text-sm text-muted-foreground sm:flex-row sm:text-left">
           <p className="text-script text-2xl leading-[1.2] text-foreground">Ishita Gautam</p>
           <p>© {new Date().getFullYear()} · Made with care &amp; a little pink.</p>
         </footer>

@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react"
 
 const links = [
   { label: "About", href: "#about" },
+  { label: "Diary", href: "#currently" },
   { label: "What I Do", href: "#craft" },
   { label: "Journey", href: "#journey" },
   { label: "Work", href: "#work" },
@@ -22,12 +23,12 @@ export function SiteNav() {
           Ishita
         </Link>
 
-        <ul className="hidden items-center gap-3 md:flex">
+        <ul className="hidden items-center gap-2 md:flex lg:gap-3">
           {links.map((link, index) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className={`paper-wobble sticker-peel inline-flex rounded-full border border-border/60 bg-[#fffaf4] px-4 py-2 text-xs font-semibold uppercase leading-none tracking-[0.14em] text-muted-foreground shadow-[6px_7px_0_oklch(0.88_0.03_30_/_0.72)] transition-colors hover:text-foreground ${
+                className={`paper-wobble sticker-peel inline-flex rounded-full border border-border/60 bg-[#fffaf4] px-3 py-2 text-[0.68rem] font-semibold uppercase leading-none tracking-[0.12em] text-muted-foreground shadow-[6px_7px_0_oklch(0.88_0.03_30_/_0.72)] transition-colors hover:text-foreground lg:px-4 lg:text-xs lg:tracking-[0.14em] ${
                   index % 2 === 0 ? "[--tilt:-2deg]" : "[--tilt:2deg]"
                 }`}
               >
