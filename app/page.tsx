@@ -2,6 +2,7 @@ import { SiteNav } from "@/components/site-nav"
 import { Hero } from "@/components/hero"
 import { About } from "@/components/about"
 import { Currently } from "@/components/currently"
+import { DeskWidget } from "@/components/desk-widget"
 import { Craft } from "@/components/craft"
 import { Journey } from "@/components/journey"
 import { Work } from "@/components/work"
@@ -23,6 +24,8 @@ export default function Page() {
       <About />
       <BeadDivider />
       <Currently />
+      <BeadDivider />
+      <DeskWidget />
       <BeadDivider />
       <Craft />
       <BeadDivider />

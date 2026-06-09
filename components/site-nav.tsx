@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
+import { handleHashScroll } from "@/lib/smooth-scroll"
 
 const links = [
   { label: "About", href: "#about" },
@@ -28,6 +29,7 @@ export function SiteNav() {
             <li key={link.href}>
               <a
                 href={link.href}
+                onClick={(event) => handleHashScroll(event, link.href)}
                 className={`paper-wobble sticker-peel inline-flex rounded-full border border-border/60 bg-[#fffaf4] px-3 py-2 text-[0.68rem] font-semibold uppercase leading-none tracking-[0.12em] text-muted-foreground shadow-[6px_7px_0_oklch(0.88_0.03_30_/_0.72)] transition-colors hover:text-foreground lg:px-4 lg:text-xs lg:tracking-[0.14em] ${
                   index % 2 === 0 ? "[--tilt:-2deg]" : "[--tilt:2deg]"
                 }`}
@@ -40,6 +42,7 @@ export function SiteNav() {
 
         <Link
           href="/#contact"
+          onClick={(event) => handleHashScroll(event, "/#contact")}
           className="hidden rounded-full border border-rose/60 bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 md:inline-block"
         >
           Get in touch
@@ -63,7 +66,7 @@ export function SiteNav() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(event) => handleHashScroll(event, link.href, () => setOpen(false))}
                   className="block py-2.5 text-base font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {link.label}

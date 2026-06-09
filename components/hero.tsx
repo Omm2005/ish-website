@@ -4,6 +4,7 @@ import type { MouseEvent } from "react"
 import { Sparkles } from "lucide-react"
 import { MobilePegboard } from "@/components/mobile-pegboard"
 import { triggerSparkles, triggerStickerPop } from "@/components/sparkle-controller"
+import { handleHashScroll } from "@/lib/smooth-scroll"
 
 const stats = [
   { value: "2.9", label: "years exploring" },
@@ -53,14 +54,20 @@ export function Hero() {
           <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <a
               href="#work"
-              onClick={(event) => popSticker(event, "work")}
+              onClick={(event) => {
+                popSticker(event, "work")
+                handleHashScroll(event, "#work")
+              }}
               className="rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5"
             >
               See my work
             </a>
             <a
               href="#about"
-              onClick={(event) => popSticker(event, "about")}
+              onClick={(event) => {
+                popSticker(event, "about")
+                handleHashScroll(event, "#about")
+              }}
               className="rounded-full border border-border bg-card px-7 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary"
             >
               More about me
