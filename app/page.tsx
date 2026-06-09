@@ -8,7 +8,7 @@ import { Contact } from "@/components/contact"
 import { BeadDivider } from "@/components/coquette-graphics"
 import { FloatingAvatars } from "@/components/floating-avatars"
 import { SparkleController } from "@/components/sparkle-controller"
-import { MusicWidget } from "@/components/music-widget"
+import { MusicWidget } from "@/components/music-player-widget"
 
 export default function Page() {
   return (
