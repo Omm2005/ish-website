@@ -65,6 +65,7 @@ export function PinkaholicMoodboard() {
             }
             .portrait-face,
             .portrait-glasses,
+            .portrait-pupils,
             .portrait-cheeks,
             .portrait-smile {
               transform-origin: center;
@@ -81,6 +82,9 @@ export function PinkaholicMoodboard() {
             }
             .portrait-button.is-cute .portrait-glasses {
               animation: portraitGlasses 760ms ease-in-out;
+            }
+            .portrait-button.is-cute .portrait-pupils {
+              animation: portraitEyesLook 760ms ease-in-out;
             }
             .portrait-button.is-cute .portrait-smile {
               animation: portraitSmile 760ms ease-in-out;
@@ -112,6 +116,14 @@ export function PinkaholicMoodboard() {
               35% { transform: translateY(-3px) scale(1.08); }
               55% { transform: translateY(2px) scale(0.96); }
             }
+            @keyframes portraitEyesLook {
+              0%, 100% { transform: translate(0, 0); }
+              18% { transform: translate(-4px, 0); }
+              36% { transform: translate(-3px, -5px); }
+              54% { transform: translate(3px, -5px); }
+              72% { transform: translate(5px, 0); }
+              88% { transform: translate(0, 2px); }
+            }
             @keyframes portraitSmile {
               0%, 100% { transform: scaleX(1); }
               45% { transform: scaleX(1.2); }
@@ -129,6 +141,7 @@ export function PinkaholicMoodboard() {
               .pinkaholic-float,
               .portrait-button.is-cute .portrait-face,
               .portrait-button.is-cute .portrait-glasses,
+              .portrait-button.is-cute .portrait-pupils,
               .portrait-button.is-cute .portrait-smile,
               .portrait-button.is-cute .portrait-cheeks,
               .portrait-button.is-cute .portrait-sparkles {
@@ -217,8 +230,10 @@ export function PinkaholicMoodboard() {
             <g className="portrait-glasses">
               <circle cx="126" cy="123" r="14" fill="#fff" className="pinkaholic-thin" />
               <circle cx="158" cy="123" r="14" fill="#fff" className="pinkaholic-thin" />
-              <circle cx="126" cy="123" r="5" fill="#433037" />
-              <circle cx="158" cy="123" r="5" fill="#433037" />
+              <g className="portrait-pupils">
+                <circle cx="126" cy="123" r="5" fill="#433037" />
+                <circle cx="158" cy="123" r="5" fill="#433037" />
+              </g>
             </g>
             <path className="portrait-smile pinkaholic-thin" d="M135 143 Q143 150 151 143" fill="none" />
             <g className="portrait-cheeks">
