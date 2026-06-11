@@ -70,6 +70,28 @@ export function MusicWidget() {
     })
   }, [isOn, selectedTrackIndex])
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null
+      const isTyping =
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target instanceof HTMLSelectElement ||
+        target?.isContentEditable
+
+      if (isTyping || event.metaKey || event.ctrlKey || event.altKey || event.key.toLowerCase() !== "m") {
+        return
+      }
+
+      event.preventDefault()
+      setIsOn((current) => !current)
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [])
+
   const toggleMusic = async () => {
     const audio = audioRef.current
 
@@ -168,6 +190,13 @@ export function MusicWidget() {
           aria-pressed={isOn}
         >
           {isOn && <FloatingNotes className="music-note" />}
+          {isOn && (
+            <span className="play-phrases mobile-player-phrases sm:hidden" aria-hidden="true">
+              <span>playing</span>
+              <span>Omm is a fun guy</span>
+              <span>heaven is here</span>
+            </span>
+          )}
 
           <span
             className={`pointer-events-none absolute right-[4.4rem] top-1/2 hidden w-[8.9rem] -translate-y-1/2 rotate-[-3deg] rounded-[1rem] border border-white/80 bg-[#fffaf4] px-3 py-2 text-left scrapbook-shadow transition-all duration-300 sm:block ${
@@ -351,8 +380,81 @@ export function MusicWidget() {
           animation-delay: 1.1s;
         }
 
-        .track-disc[data-playing="true"][data-in-view="true"] .disc-note {
+        .track-disc.is-emitting .disc-note {
           animation: disc-note-float 2.2s ease-in-out infinite;
+        }
+
+        .play-phrases {
+          pointer-events: none;
+          position: absolute;
+          inset: 0;
+          z-index: 5;
+        }
+
+        .play-phrases span {
+          position: absolute;
+          display: block;
+          width: max-content;
+          max-width: 9.5rem;
+          color: oklch(0.82 0.085 355);
+          font-size: 0.65rem;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          line-height: 1;
+          opacity: 0;
+          text-transform: uppercase;
+          animation: play-phrase-float 4.8s ease-in-out infinite;
+          filter: drop-shadow(0 4px 8px rgba(198, 96, 144, 0.24));
+          text-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.82),
+            0 8px 18px rgba(198, 96, 144, 0.18);
+        }
+
+        .play-phrases span:nth-child(1) {
+          left: -1.6rem;
+          top: -0.7rem;
+        }
+
+        .play-phrases span:nth-child(2) {
+          right: -2.2rem;
+          top: 0.15rem;
+          animation-delay: 1.6s;
+        }
+
+        .play-phrases span:nth-child(3) {
+          left: 42%;
+          bottom: -0.35rem;
+          animation-delay: 3.2s;
+        }
+
+        .mobile-player-phrases span:nth-child(1) {
+          left: -1rem;
+          top: -1rem;
+        }
+
+        .mobile-player-phrases span:nth-child(2) {
+          right: -1.2rem;
+          top: 0.2rem;
+        }
+
+        .mobile-player-phrases span:nth-child(3) {
+          left: 32%;
+          bottom: -0.8rem;
+        }
+
+        @keyframes play-phrase-float {
+          0% {
+            opacity: 0;
+            transform: translateY(8px) rotate(-8deg) scale(0.78);
+          }
+          18%,
+          64% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-28px) rotate(10deg) scale(1.04);
+          }
         }
 
         @keyframes track-disc-drift {
@@ -426,7 +528,7 @@ export function MusicWidget() {
           }
 
           .music-note,
-          .track-disc[data-playing="true"][data-in-view="true"] .disc-note {
+          .track-disc.is-emitting .disc-note {
             opacity: 1;
           }
         }
@@ -501,7 +603,7 @@ function TrackButton({
       onClick={() => onSelect(index)}
       className={`track-disc group/track pointer-events-auto grid aspect-square place-items-center border-0 bg-transparent p-0 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
         isSide ? "absolute" : "track-disc-mobile"
-      } ${isSelected ? "selected" : ""}`}
+      } ${isSelected ? "selected" : ""} ${isPlaying || isSelected ? "is-emitting" : ""}`}
       data-in-view="true"
       data-playing={isPlaying}
       data-track-index={index}
@@ -511,6 +613,13 @@ function TrackButton({
     >
       <TrackDisc track={track} />
       <FloatingNotes className="disc-note" />
+      {isPlaying && isSelected && (
+        <span className="play-phrases" aria-hidden="true">
+          <span>playing</span>
+          <span>Omm is a fun guy</span>
+          <span>heaven is here</span>
+        </span>
+      )}
       <span className="pointer-events-none absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 whitespace-nowrap rounded-full border border-border/60 bg-card/95 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-foreground shadow-sm group-hover/track:block group-focus-visible/track:block">
         {track.title}
       </span>
