@@ -1,4 +1,17 @@
+"use client"
+
+import { useState } from "react"
+
 export function PinkaholicMoodboard() {
+  const [isFaceAnimating, setIsFaceAnimating] = useState(false)
+
+  const animateFace = () => {
+    setIsFaceAnimating(false)
+    window.requestAnimationFrame(() => {
+      setIsFaceAnimating(true)
+    })
+  }
+
   return (
     <svg
       viewBox="0 0 920 640"
@@ -46,12 +59,81 @@ export function PinkaholicMoodboard() {
               transform-origin: center;
               transform-box: fill-box;
             }
+            .portrait-button {
+              cursor: pointer;
+              outline: none;
+            }
+            .portrait-face,
+            .portrait-glasses,
+            .portrait-cheeks,
+            .portrait-smile {
+              transform-origin: center;
+              transform-box: fill-box;
+            }
+            .portrait-sparkles {
+              pointer-events: none;
+              opacity: 0;
+              transform-origin: center;
+              transform-box: fill-box;
+            }
+            .portrait-button.is-cute .portrait-face {
+              animation: portraitBounce 760ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+            .portrait-button.is-cute .portrait-glasses {
+              animation: portraitGlasses 760ms ease-in-out;
+            }
+            .portrait-button.is-cute .portrait-smile {
+              animation: portraitSmile 760ms ease-in-out;
+            }
+            .portrait-button.is-cute .portrait-cheeks {
+              animation: portraitBlush 760ms ease-in-out;
+            }
+            .portrait-button.is-cute .portrait-sparkles {
+              animation: portraitSparklePop 760ms ease-out;
+            }
+            .portrait-button.is-cute .portrait-sparkles:nth-of-type(2) {
+              animation-delay: 90ms;
+            }
+            .portrait-button.is-cute .portrait-sparkles:nth-of-type(3) {
+              animation-delay: 150ms;
+            }
             @keyframes pinkaholicFloat {
               0%, 100% { transform: translateY(0) rotate(-1deg); }
               50% { transform: translateY(-7px) rotate(1deg); }
             }
+            @keyframes portraitBounce {
+              0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+              25% { transform: translateY(-8px) rotate(-4deg) scale(1.05); }
+              50% { transform: translateY(2px) rotate(3deg) scale(1.02); }
+              75% { transform: translateY(-4px) rotate(-2deg) scale(1.04); }
+            }
+            @keyframes portraitGlasses {
+              0%, 100% { transform: translateY(0) scale(1); }
+              35% { transform: translateY(-3px) scale(1.08); }
+              55% { transform: translateY(2px) scale(0.96); }
+            }
+            @keyframes portraitSmile {
+              0%, 100% { transform: scaleX(1); }
+              45% { transform: scaleX(1.2); }
+            }
+            @keyframes portraitBlush {
+              0%, 100% { opacity: 1; transform: scale(1); }
+              45% { opacity: 1; transform: scale(1.45); }
+            }
+            @keyframes portraitSparklePop {
+              0% { opacity: 0; transform: translateY(10px) rotate(-12deg) scale(0.45); }
+              35%, 70% { opacity: 1; }
+              100% { opacity: 0; transform: translateY(-16px) rotate(14deg) scale(1.18); }
+            }
             @media (prefers-reduced-motion: reduce) {
-              .pinkaholic-float { animation: none; }
+              .pinkaholic-float,
+              .portrait-button.is-cute .portrait-face,
+              .portrait-button.is-cute .portrait-glasses,
+              .portrait-button.is-cute .portrait-smile,
+              .portrait-button.is-cute .portrait-cheeks,
+              .portrait-button.is-cute .portrait-sparkles {
+                animation: none;
+              }
             }
           `}
         </style>
@@ -104,17 +186,47 @@ export function PinkaholicMoodboard() {
         {Array.from({ length: 5 }).map((_, index) => (
           <circle key={`stamp-right-${index}`} cx="286" cy={22 + index * 42} r="9" fill="#b7d4ee" />
         ))}
-        <rect x="35" y="32" width="216" height="146" rx="4" fill="#fff7c8" />
-        <rect x="50" y="46" width="186" height="118" rx="4" fill="#fbede7" />
-        <path d="M132 58 C98 62 80 90 80 126 V152 H205 V126 C205 86 180 54 132 58 Z" fill="#171113" />
-        <rect x="102" y="92" width="80" height="70" rx="34" fill="#fff6f3" className="pinkaholic-thin" />
-        <circle cx="126" cy="123" r="14" fill="#fff" className="pinkaholic-thin" />
-        <circle cx="158" cy="123" r="14" fill="#fff" className="pinkaholic-thin" />
-        <circle cx="126" cy="123" r="5" fill="#433037" />
-        <circle cx="158" cy="123" r="5" fill="#433037" />
-        <path d="M135 143 Q143 150 151 143" fill="none" className="pinkaholic-thin" />
-        <circle cx="113" cy="141" r="5" fill="#f4a9bd" />
-        <circle cx="174" cy="141" r="5" fill="#f4a9bd" />
+        <g
+          role="button"
+          tabIndex={0}
+          className={`portrait-button ${isFaceAnimating ? "is-cute" : ""}`}
+          onClick={animateFace}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault()
+              animateFace()
+            }
+          }}
+          onAnimationEnd={() => setIsFaceAnimating(false)}
+          aria-label="Animate Ishita portrait"
+        >
+          <rect x="35" y="32" width="216" height="146" rx="4" fill="#fff7c8" />
+          <rect x="50" y="46" width="186" height="118" rx="4" fill="#fbede7" />
+          <text className="portrait-sparkles" x="75" y="68" fill="#c86090" fontSize="24" fontFamily="var(--font-sparkle), cursive">
+            ✦
+          </text>
+          <text className="portrait-sparkles" x="203" y="82" fill="#e39ab9" fontSize="22" fontFamily="var(--font-sparkle), cursive">
+            ♡
+          </text>
+          <text className="portrait-sparkles" x="188" y="152" fill="#f0c44b" fontSize="22" fontFamily="var(--font-sparkle), cursive">
+            ✧
+          </text>
+          <g className="portrait-face">
+            <path d="M132 58 C98 62 80 90 80 126 V152 H205 V126 C205 86 180 54 132 58 Z" fill="#171113" />
+            <rect x="102" y="92" width="80" height="70" rx="34" fill="#fff6f3" className="pinkaholic-thin" />
+            <g className="portrait-glasses">
+              <circle cx="126" cy="123" r="14" fill="#fff" className="pinkaholic-thin" />
+              <circle cx="158" cy="123" r="14" fill="#fff" className="pinkaholic-thin" />
+              <circle cx="126" cy="123" r="5" fill="#433037" />
+              <circle cx="158" cy="123" r="5" fill="#433037" />
+            </g>
+            <path className="portrait-smile pinkaholic-thin" d="M135 143 Q143 150 151 143" fill="none" />
+            <g className="portrait-cheeks">
+              <circle cx="113" cy="141" r="5" fill="#f4a9bd" />
+              <circle cx="174" cy="141" r="5" fill="#f4a9bd" />
+            </g>
+          </g>
+        </g>
         <path d="M220 40 L228 57 L246 60 L233 73 L237 92 L220 82 L203 92 L207 73 L194 60 L212 57 Z" fill="#c84265" />
       </g>
 
