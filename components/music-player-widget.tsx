@@ -15,15 +15,15 @@ type Track = {
 }
 
 const tracks: Track[] = [
-  { title: "Chérie", src: "/audio/cherie.mp3", coverSrc: "/audio/cherie-cover.jpg", side: "left", top: 16, offset: 0, size: 72, rotate: -8 },
-  { title: "Jello", src: "/audio/Jello.mp3", coverSrc: "/audio/Jello-cover.jpg", side: "right", top: 17, offset: 0, size: 68, rotate: 7 },
-  { title: "La Madrague", src: "/audio/La Madrague.mp3", coverSrc: "/audio/La-Madrague-cover.jpg", side: "left", top: 30, offset: 20, size: 76, rotate: -5 },
-  { title: "Tabun", src: "/audio/たぶん.mp3", coverSrc: "/audio/たぶん-cover.jpg", side: "right", top: 32, offset: -18, size: 64, rotate: 8 },
-  { title: "Caramellow", src: "/audio/Caramellow.mp3", coverSrc: "/audio/Caramellow-cover.jpg", side: "left", top: 48, offset: 4, size: 74, rotate: -7 },
-  { title: "Movin..", src: "/audio/Movin..mp3", coverSrc: "/audio/Movin.-cover.jpg", side: "right", top: 50, offset: -8, size: 62, rotate: 5 },
-  { title: "Wind", src: "/audio/Wind.mp3", coverSrc: "/audio/Wind-cover.jpg", side: "left", top: 67, offset: 22, size: 68, rotate: -4 },
-  { title: "Summer", src: "/audio/summer.mp3", coverSrc: "/audio/summer-cover.jpg", side: "right", top: 70, offset: -16, size: 76, rotate: 6 },
-  { title: "Daydream", src: "/audio/Daydream.mp3", coverSrc: "/audio/Daydream-cover.jpg", side: "left", top: 84, offset: 6, size: 70, rotate: -6 },
+  { title: "Chérie", src: "/audio/cherie.mp3", coverSrc: "/audio/cherie-cover.webp", side: "left", top: 16, offset: 0, size: 72, rotate: -8 },
+  { title: "Jello", src: "/audio/Jello.mp3", coverSrc: "/audio/jello-cover.webp", side: "right", top: 17, offset: 0, size: 68, rotate: 7 },
+  { title: "La Madrague", src: "/audio/La Madrague.mp3", coverSrc: "/audio/la-madrague-cover.webp", side: "left", top: 30, offset: 20, size: 76, rotate: -5 },
+  { title: "Tabun", src: "/audio/たぶん.mp3", coverSrc: "/audio/tabun-cover.webp", side: "right", top: 32, offset: -18, size: 64, rotate: 8 },
+  { title: "Caramellow", src: "/audio/Caramellow.mp3", coverSrc: "/audio/caramellow-cover.webp", side: "left", top: 48, offset: 4, size: 74, rotate: -7 },
+  { title: "Movin..", src: "/audio/Movin..mp3", coverSrc: "/audio/movin-cover.webp", side: "right", top: 50, offset: -8, size: 62, rotate: 5 },
+  { title: "Wind", src: "/audio/Wind.mp3", coverSrc: "/audio/wind-cover.webp", side: "left", top: 67, offset: 22, size: 68, rotate: -4 },
+  { title: "Summer", src: "/audio/summer.mp3", coverSrc: "/audio/summer-cover.webp", side: "right", top: 70, offset: -16, size: 76, rotate: 6 },
+  { title: "Daydream", src: "/audio/Daydream.mp3", coverSrc: "/audio/daydream-cover.webp", side: "left", top: 84, offset: 6, size: 70, rotate: -6 },
 ]
 
 export function MusicWidget() {
@@ -637,7 +637,12 @@ function TrackDisc({ track }: { track: Track }) {
       <span className="absolute inset-1 rounded-full bg-[repeating-radial-gradient(circle_at_center,#1f171d_0_4px,#3b3038_4px_6px,#1f171d_6px_10px)]" />
       <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,transparent_0_27%,rgba(255,255,255,0.2)_28%,transparent_31%,transparent_43%,rgba(255,255,255,0.12)_44%,transparent_47%)]" />
       <span className="relative aspect-square w-[58%] overflow-hidden rounded-full border border-white/85 bg-card shadow-[0_8px_14px_-12px_rgba(0,0,0,0.7)]">
-        <img src={track.coverSrc} alt="" className="h-full w-full object-cover" draggable={false} />
+        <img
+          src={track.coverSrc}
+          alt=""
+          className="h-full w-full object-cover"
+          draggable={false}
+        />
         <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.36),transparent_42%,rgba(0,0,0,0.18))]" />
       </span>
     </span>
