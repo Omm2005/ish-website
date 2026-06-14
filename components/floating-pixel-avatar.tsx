@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
 
-const dialogLines = ["Hi there, how are you?", "I am Om...", "I hang here because it's fun"]
+const dialogLines = ["Hi there, how are you?", "I am ish...", "I hang here because it's fun"]
 
 export function FloatingPixelAvatar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -55,13 +55,13 @@ export function FloatingPixelAvatar() {
       <button
         type="button"
         className="pixel-avatar-button pointer-events-auto relative block w-full border-0 bg-transparent p-0"
-        aria-label={isOpen ? "Hide Om's pixel character chat" : "Start Om's pixel character chat"}
+        aria-label={isOpen ? "Hide ish's pixel character chat" : "Start ish's pixel character chat"}
         aria-expanded={isOpen}
         onClick={handleClick}
       >
         {!isOpen && (
           <span className="click-cue absolute bottom-[96%] left-16 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#6f5a5a]/55 sm:bottom-[100%] sm:text-[11px]">
-            <span>click Om</span>
+            <span>click ish</span>
           </span>
         )}
         <Image

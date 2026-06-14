@@ -7,7 +7,7 @@ import { triggerStickerPop } from "@/components/sparkle-controller"
 const projects = [
   {
     image: "/images/work-game.webp",
-    callout: "FOUND IT FIRST ••",
+    callout: "FOUND IT FIRST •••",
     shelf: "bg-[#f8c8da]",
     tag: "Game Design",
     title: "A Little Floating World",
@@ -83,11 +83,11 @@ export function Work() {
                 aria-label={`Pop a sticker for ${project.title}`}
                 onClick={(event) => popProjectSticker(event, project.tag)}
                 onKeyDown={(event) => popProjectStickerFromKeyboard(event, project.tag)}
-                className={`paper-wobble group relative grid gap-4 rounded-[1.7rem] border border-white/70 p-4 shadow-[0_18px_35px_-28px_rgba(80,45,60,0.45)] sm:grid-cols-[220px_1fr] sm:items-center sm:rounded-[2rem] ${
+                className={`paper-wobble group relative grid gap-4 rounded-[1.7rem] border border-white/70 p-4 shadow-[0_18px_35px_-28px_rgba(80,45,60,0.45)] sm:grid-cols-[220px_1fr] sm:items-center ${
                   project.shelf
                 } ${index % 2 === 0 ? "[--tilt:-0.8deg]" : "[--tilt:0.8deg]"} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
               >
-                <span className="sticker-peel absolute -top-3 left-5 right-5 z-10 mx-auto w-fit max-w-[calc(100%-2.5rem)] rounded-full bg-card px-3 py-2 text-center text-[0.62rem] font-bold uppercase leading-snug tracking-[0.12em] text-foreground scrapbook-shadow sm:left-5 sm:right-auto sm:mx-0 sm:px-4 sm:text-[0.66rem] sm:tracking-[0.16em]">
+                <span className="sticker-peel absolute -top-3 left-5 right-5 z-10 mx-auto w-fit max-w-[calc(100%-2.5rem)] rounded-full bg-card px-3 py-2 text-center text-[0.62rem] font-bold uppercase tracking-[0.1em] text-foreground [filter:drop-shadow(0_2px_4px_rgba(36,24,24,0.15))]">
                   {project.callout}
                 </span>
                 <div className="relative overflow-hidden rounded-[1.4rem] border border-white/80 bg-card p-2.5 sm:rounded-[1.7rem] sm:p-3">
@@ -103,7 +103,7 @@ export function Work() {
                   />
                 </div>
                 <div className="min-w-0 rounded-[1.3rem] bg-card/85 p-4 sm:p-5">
-                  <span className="w-fit max-w-full break-words rounded-full bg-accent px-3 py-1 text-[0.68rem] font-semibold uppercase leading-snug tracking-[0.1em] text-accent-foreground sm:text-xs sm:tracking-[0.14em]">
+                  <span className="w-fit max-w-full break-words rounded-full bg-accent px-3 py-1 text-[0.68rem] font-semibold uppercase leading-snug tracking-[0.1em] text-accent-foreground sm:text-[0.75rem]">
                     {project.tag}
                   </span>
                   <h3 className="mt-3 break-words font-sans text-[1.45rem] leading-tight font-semibold text-foreground [overflow-wrap:anywhere] sm:text-2xl">
