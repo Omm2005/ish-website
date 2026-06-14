@@ -9,6 +9,7 @@ import { Work } from "@/components/work"
 import { Contact } from "@/components/contact"
 import { BeadDivider } from "@/components/coquette-graphics"
 import { FloatingAvatars } from "@/components/floating-avatars"
+import { FloatingPixelAvatar } from "@/components/floating-pixel-avatar"
 import { SparkleController } from "@/components/sparkle-controller"
 import { MusicWidget } from "@/components/music-player-widget"
 
@@ -16,6 +17,7 @@ export default function Page() {
   return (
     <main className="relative min-h-screen">
       <FloatingAvatars />
+      <FloatingPixelAvatar />
       <SparkleController />
       <MusicWidget />
       <SiteNav />
