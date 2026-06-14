@@ -60,7 +60,7 @@ export function FloatingPixelAvatar() {
         onClick={handleClick}
       >
         {!isOpen && (
-          <span className="click-cue absolute bottom-[96%] left-[100%] -translate-x-1/2 whitespace-nowrap font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#6f5a5a]/55 sm:bottom-[100%] sm:text-[11px]">
+          <span className="click-cue absolute bottom-[96%] left-16 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#6f5a5a]/55 sm:bottom-[100%] sm:text-[11px]">
             <span>click Om</span>
           </span>
         )}
