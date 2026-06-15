@@ -34,9 +34,9 @@ export function FloatingPixelAvatar() {
   }, [isOpen])
 
   return (
-    <div className="pointer-events-none fixed bottom-3 left-3 z-50 w-[50px] select-none sm:bottom-5 sm:left-5 sm:w-[62px] md:w-[72px] lg:w-[78px]">
+    <div className="pointer-events-none fixed bottom-3 left-3 z-50 w-[82px] select-none sm:bottom-5 sm:left-5 sm:w-[98px] md:w-[112px] lg:w-[124px]">
       {isOpen && (
-        <div className="absolute bottom-[76%] left-[74%] w-fit max-w-[calc(100vw-6.5rem)] border-2 border-[#241818] bg-[#fff7ef] px-2.5 py-2 font-mono text-[11px] font-bold leading-snug text-[#241818] shadow-[4px_4px_0_rgba(36,24,24,0.22)] sm:text-xs">
+        <div className="absolute bottom-[78%] left-[68%] w-fit max-w-[calc(100vw-7.5rem)] border-2 border-[#241818] bg-[#fff7ef] px-2.5 py-2 font-mono text-[11px] font-bold leading-snug text-[#241818] shadow-[4px_4px_0_rgba(36,24,24,0.22)] sm:text-xs">
           <span
             key={lineIndex}
             className="dialog-text"
@@ -60,7 +60,7 @@ export function FloatingPixelAvatar() {
         onClick={handleClick}
       >
         {!isOpen && (
-          <span className="click-cue absolute bottom-[96%] left-16 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#6f5a5a]/55 sm:bottom-[100%] sm:text-[11px]">
+          <span className="click-cue absolute bottom-[74%] left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#6f5a5a]/55 sm:bottom-[76%] sm:text-[11px]">
             <span>click ish</span>
           </span>
         )}
@@ -69,7 +69,7 @@ export function FloatingPixelAvatar() {
           alt=""
           width={1024}
           height={1536}
-          sizes="(min-width: 1024px) 78px, (min-width: 768px) 72px, (min-width: 640px) 62px, 50px"
+          sizes="(min-width: 1024px) 124px, (min-width: 768px) 112px, (min-width: 640px) 98px, 82px"
           className="h-auto w-full drop-shadow-[0_12px_20px_rgba(72,45,48,0.28)] [image-rendering:pixelated]"
           draggable={false}
         />
