@@ -64,17 +64,70 @@ export function FloatingPixelAvatar() {
             <span>click ish</span>
           </span>
         )}
-        <Image
-          src="/images/floating-pixel-avatar-tight.png"
-          alt=""
-          width={465}
-          height={458}
-          sizes="(min-width: 1024px) 104px, (min-width: 768px) 96px, (min-width: 640px) 88px, 78px"
-          className="h-auto w-full drop-shadow-[0_12px_20px_rgba(72,45,48,0.28)] [image-rendering:pixelated]"
-          draggable={false}
-        />
+        <span className="avatar-stage relative block aspect-[465/458] w-full drop-shadow-[0_12px_20px_rgba(72,45,48,0.28)]">
+          <Image
+            src="/images/floating-pixel-avatar-tight.png"
+            alt=""
+            width={465}
+            height={458}
+            sizes="(min-width: 1024px) 104px, (min-width: 768px) 96px, (min-width: 640px) 88px, 78px"
+            className="avatar-part avatar-left-wing absolute inset-0 h-full w-full object-contain [image-rendering:pixelated]"
+            style={{
+              clipPath: "polygon(0 31%, 49% 31%, 49% 78%, 0 78%)",
+              transformOrigin: "42% 53%",
+              zIndex: 1,
+            }}
+            draggable={false}
+            priority
+          />
+          <Image
+            src="/images/floating-pixel-avatar-tight.png"
+            alt=""
+            width={465}
+            height={458}
+            sizes="(min-width: 1024px) 104px, (min-width: 768px) 96px, (min-width: 640px) 88px, 78px"
+            className="avatar-part avatar-right-wing absolute inset-0 h-full w-full object-contain [image-rendering:pixelated]"
+            style={{
+              clipPath: "polygon(51% 31%, 100% 31%, 100% 78%, 51% 78%)",
+              transformOrigin: "58% 53%",
+              zIndex: 1,
+            }}
+            draggable={false}
+            priority
+          />
+          <Image
+            src="/images/floating-pixel-avatar-tight.png"
+            alt=""
+            width={465}
+            height={458}
+            sizes="(min-width: 1024px) 104px, (min-width: 768px) 96px, (min-width: 640px) 88px, 78px"
+            className="avatar-part absolute inset-0 h-full w-full object-contain [image-rendering:pixelated]"
+            style={{
+              clipPath: "polygon(27% 0, 73% 0, 73% 100%, 27% 100%)",
+              zIndex: 2,
+            }}
+            draggable={false}
+            priority
+          />
+        </span>
       </button>
-      <style jsx>{`
+      <style jsx global>{`
+        .pixel-avatar-button {
+          perspective: 260px;
+        }
+
+        .avatar-part {
+          pointer-events: none;
+        }
+
+        .avatar-left-wing {
+          animation: flap-left 0.72s ease-in-out infinite;
+        }
+
+        .avatar-right-wing {
+          animation: flap-right 0.72s ease-in-out infinite;
+        }
+
         .click-cue {
           animation: click-cue-pulse 1.45s ease-in-out infinite;
         }
@@ -111,6 +164,32 @@ export function FloatingPixelAvatar() {
           }
         }
 
+        @keyframes flap-left {
+          0%,
+          100% {
+            transform: rotateZ(0deg) rotateY(0deg) translateY(0);
+          }
+          45% {
+            transform: rotateZ(10deg) rotateY(-24deg) translateY(2%);
+          }
+          65% {
+            transform: rotateZ(-5deg) rotateY(10deg) translateY(-1%);
+          }
+        }
+
+        @keyframes flap-right {
+          0%,
+          100% {
+            transform: rotateZ(0deg) rotateY(0deg) translateY(0);
+          }
+          45% {
+            transform: rotateZ(-10deg) rotateY(24deg) translateY(2%);
+          }
+          65% {
+            transform: rotateZ(5deg) rotateY(-10deg) translateY(-1%);
+          }
+        }
+
         @keyframes dialog-type {
           from {
             max-width: 0;
@@ -132,6 +211,8 @@ export function FloatingPixelAvatar() {
         }
 
         @media (prefers-reduced-motion: reduce) {
+          .avatar-left-wing,
+          .avatar-right-wing,
           .click-cue,
           .dialog-text,
           .dialog-text::after {
