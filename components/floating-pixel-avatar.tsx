@@ -34,7 +34,7 @@ export function FloatingPixelAvatar() {
   }, [isOpen])
 
   return (
-    <div className="pointer-events-none fixed bottom-3 left-3 z-50 w-[82px] select-none sm:bottom-5 sm:left-5 sm:w-[98px] md:w-[112px] lg:w-[124px]">
+    <div className="pointer-events-none fixed bottom-5 left-5 z-50 w-[78px] select-none sm:bottom-6 sm:left-7 sm:w-[88px] md:w-[96px] lg:w-[104px]">
       {isOpen && (
         <div className="absolute bottom-[78%] left-[68%] w-fit max-w-[calc(100vw-7.5rem)] border-2 border-[#241818] bg-[#fff7ef] px-2.5 py-2 font-mono text-[11px] font-bold leading-snug text-[#241818] shadow-[4px_4px_0_rgba(36,24,24,0.22)] sm:text-xs">
           <span
@@ -60,16 +60,16 @@ export function FloatingPixelAvatar() {
         onClick={handleClick}
       >
         {!isOpen && (
-          <span className="click-cue absolute bottom-[74%] left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#6f5a5a]/55 sm:bottom-[76%] sm:text-[11px]">
+          <span className="click-cue absolute bottom-[calc(100%+0.5rem)] left-0 whitespace-nowrap font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-[#6f5a5a]/55 sm:text-[11px]">
             <span>click ish</span>
           </span>
         )}
         <Image
-          src="/images/floating-pixel-avatar.webp"
+          src="/images/floating-pixel-avatar-tight.png"
           alt=""
-          width={1024}
-          height={1536}
-          sizes="(min-width: 1024px) 124px, (min-width: 768px) 112px, (min-width: 640px) 98px, 82px"
+          width={465}
+          height={458}
+          sizes="(min-width: 1024px) 104px, (min-width: 768px) 96px, (min-width: 640px) 88px, 78px"
           className="h-auto w-full drop-shadow-[0_12px_20px_rgba(72,45,48,0.28)] [image-rendering:pixelated]"
           draggable={false}
         />
@@ -103,11 +103,11 @@ export function FloatingPixelAvatar() {
           0%,
           100% {
             opacity: 0.42;
-            transform: translateX(-50%) translateY(0);
+            transform: translateY(0);
           }
           50% {
             opacity: 0.68;
-            transform: translateX(-50%) translateY(-2px);
+            transform: translateY(-2px);
           }
         }
 
